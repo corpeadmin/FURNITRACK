@@ -1,5 +1,159 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@* Reports.cshtml *@
 @{
+    ViewData["Title"] = "Reports & Analytics";
 }
+
+<div class="reports-container">
+    @* HEADER SECTION *@
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-1" style="color: #1e293b;">Reports & Analytics</h2>
+            <p class="text-muted">Track sales performance and inventory metrics</p>
+        </div>
+
+        @* DATE FILTER *@
+        <div class="d-flex align-items-center bg-white border rounded-3 px-3 py-1 shadow-sm" style="border-color: #e2e8f0 !important;">
+            <i class="bi bi-calendar3 text-muted me-2"></i>
+            <select class="form-select border-0 shadow-none fw-medium" style="width: 140px; cursor: pointer; color: #475569;">
+                <option value="7">Last 7 Days</option>
+                <option value="30">Last 30 Days</option>
+                <option value="90">Last Quarter</option>
+            </select>
+        </div>
+    </div>
+
+    @* SUMMARY CARDS *@
+    <div class="row g-4 mb-5">
+        <div class="col-md-3">
+            <div class="card border shadow-sm p-3 h-100 border-light">
+                <div class="d-flex align-items-center">
+                    <div class="rounded-3 p-3 me-3" style="background-color: #f1f5f9;">
+                        <i class="bi bi-currency-dollar fs-4" style="color: #475569;"></i>
+                    </div>
+                    <div>
+                        <small class="text-muted d-block fw-medium">Total Revenue</small>
+                        <h4 class="fw-bold mb-0">₱457,700</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card border shadow-sm p-3 h-100 border-light">
+                <div class="d-flex align-items-center">
+                    <div class="rounded-3 p-3 me-3" style="background-color: #f0fdf4;">
+                        <i class="bi bi-graph-up-arrow fs-4" style="color: #22c55e;"></i>
+                    </div>
+                    <div>
+                        <small class="text-muted d-block fw-medium">Items Sold</small>
+                        <h4 class="fw-bold mb-0">136</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card border shadow-sm p-3 h-100 border-light">
+                <div class="d-flex align-items-center">
+                    <div class="rounded-3 p-3 me-3" style="background-color: #fffbeb;">
+                        <i class="bi bi-box-seam fs-4" style="color: #f59e0b;"></i>
+                    </div>
+                    <div>
+                        <small class="text-muted d-block fw-medium">Avg. Sale Value</small>
+                        <h4 class="fw-bold mb-0">₱3,366</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card border shadow-sm p-3 h-100 border-light">
+                <div class="d-flex align-items-center">
+                    <div class="rounded-3 p-3 me-3" style="background-color: #f1f5f9;">
+                        <i class="bi bi-graph-up fs-4" style="color: #475569;"></i>
+                    </div>
+                    <div>
+                        <small class="text-muted d-block fw-medium">Growth Rate</small>
+                        <h4 class="fw-bold mb-0">+12.5%</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @* INVENTORY MOVEMENT LOG *@
+    <div class="card border shadow-sm overflow-hidden border-light">
+        <div class="card-header bg-white py-4 border-0">
+            <h5 class="fw-bold mb-0">Inventory Movement Log</h5>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead style="background-color: #eeede8;">
+                    <tr>
+                        <th class="px-4 py-3 border-0 text-muted small fw-bold">DATE</th>
+                        <th class="py-3 border-0 text-muted small fw-bold">ITEM</th>
+                        <th class="py-3 border-0 text-muted small fw-bold">TYPE</th>
+                        <th class="py-3 border-0 text-muted small fw-bold">QUANTITY</th>
+                        <th class="py-3 border-0 text-muted small fw-bold px-4">VALUE</th>
+                    </tr>
+                </thead>
+                <tbody class="border-top-0">
+                    <tr>
+                        <td class="px-4 text-secondary">2026-04-21 14:30</td>
+                        <td class="fw-medium">Office Chair - Executive</td>
+                        <td>
+                            <span class="badge rounded-pill px-3 py-2" style="background-color: #fee2e2; color: #ef4444;">Sale</span>
+                        </td>
+                        <td class="text-dark"> -2</td>
+                        <td class="px-4 fw-bold">₱8,500</td>
+                    </tr>
+                    <tr>
+                        <td class="px-4 text-secondary">2026-04-21 12:15</td>
+                        <td class="fw-medium">Dining Table - Oak Wood</td>
+                        <td>
+                            <span class="badge rounded-pill px-3 py-2" style="background-color: #f0fdf4; color: #22c55e;">Restock</span>
+                        </td>
+                        <td class="text-dark">+5</td>
+                        <td class="px-4 text-muted">—</td>
+                    </tr>
+                    <tr>
+                        <td class="px-4 text-secondary">2026-04-21 10:45</td>
+                        <td class="fw-medium">Coffee Table - Modern</td>
+                        <td>
+                            <span class="badge rounded-pill px-3 py-2" style="background-color: #fee2e2; color: #ef4444;">Sale</span>
+                        </td>
+                        <td class="text-dark"> -1</td>
+                        <td class="px-4 fw-bold">₱6,750</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<style>
+    .reports-container {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    .card {
+        border-radius: 10px;
+    }
+
+    .table thead th {
+        font-size: 0.75rem;
+        letter-spacing: 0.05rem;
+    }
+
+    .table tbody td {
+        padding-top: 1.25rem;
+        padding-bottom: 1.25rem;
+        border-bottom: 1px solid #f1f5f9;
+        font-size: 0.95rem;
+    }
+
+    .badge {
+        font-weight: 600;
+        font-size: 0.8rem;
+    }
+</style>

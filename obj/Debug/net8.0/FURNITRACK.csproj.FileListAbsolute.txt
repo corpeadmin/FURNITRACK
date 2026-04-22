@@ -137,3 +137,4 @@ C:\Users\loki\source\repos\FURNITRACK\obj\Debug\net8.0\refint\FURNITRACK.dll
 C:\Users\loki\source\repos\FURNITRACK\obj\Debug\net8.0\FURNITRACK.pdb
 C:\Users\loki\source\repos\FURNITRACK\obj\Debug\net8.0\FURNITRACK.genruntimeconfig.cache
 C:\Users\loki\source\repos\FURNITRACK\obj\Debug\net8.0\ref\FURNITRACK.dll
+C:\Users\loki\source\repos\FURNITRACK\obj\Debug\net8.0\FURNITRACK.sourcelink.json
