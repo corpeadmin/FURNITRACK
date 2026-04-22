@@ -1,0 +1,52 @@
+﻿@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="d-flex align-items-center justify-content-center" style="min-height: 100vh; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">
+    <div class="card shadow-sm border-0" style="width: 100%; max-width: 420px; border-radius: 12px;">
+        <div class="card-body p-5">
+
+            <div class="text-center mb-5">
+                <div class="mb-3">
+                    <i class="bi bi-box-seam" style="font-size: 3rem; color: #1a335d;"></i>
+                </div>
+                <h3 class="fw-bold mb-1" style="color: #1a335d; letter-spacing: 1px;">FURNITRACK</h3>
+                <p class="text-muted small uppercase">Ken's Marketing & General Merchandise</p>
+            </div>
+
+            <form>
+                <div class="mb-3">
+                    <label class="form-label small fw-bold text-secondary">Username</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-white border-end-0 text-muted">
+                            <i class="bi bi-person"></i>
+                        </span>
+                        <input type="text" class="form-control border-start-0 ps-0" placeholder="e.g. kens_admin" readonly />
+                    </div>
+                    <div class="form-text mt-1" style="font-size: 0.75rem;">Backend pending: using static placeholder</div>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label small fw-bold text-secondary">Password</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-white border-end-0 text-muted">
+                            <i class="bi bi-lock"></i>
+                        </span>
+                        <input type="password" class="form-control border-start-0 ps-0" placeholder="••••••••" readonly />
+                    </div>
+                </div>
+
+                <div class="d-grid gap-2">
+                    <a asp-controller="Home" asp-action="Dashboard" class="btn btn-primary py-2 fw-bold" style="background-color: #1a335d; border: none; border-radius: 6px;">
+                        Login to Dashboard
+                    </a>
+                </div>
+
+                <div class="mt-4 text-center">
+                    <a href="#" class="text-decoration-none small text-muted">Trouble logging in? Contact Support</a>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>

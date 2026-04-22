@@ -1,0 +1,48 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+/* Custom Sidebar Styles */
+.bg-dark-blue {
+    background-color: #1a335d !important; /* The navy blue from your image */
+}
+
+#sidebar-wrapper .list-group-item {
+    font-size: 1.1rem;
+    transition: all 0.2s;
+    color: rgba(255,255,255,0.8) !important;
+}
+
+    #sidebar-wrapper .list-group-item:hover {
+        background-color: rgba(255,255,255,0.1) !important;
+        color: #fff !important;
+    }
+
+/* The blue highlight for the active page */
+.active-link {
+    background-color: #3b5998 !important;
+    color: white !important;
+}
+
+body {
+    background-color: #f8f9fa;
+}
