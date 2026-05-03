@@ -1,4 +1,5 @@
-﻿@{
+﻿@model FURNITRACK.ViewModels.LoginViewModel
+@{
     ViewData["Title"] = "Login";
 }
 
@@ -14,39 +15,59 @@
                 <p class="text-muted small uppercase">Ken's Marketing & General Merchandise</p>
             </div>
 
-            <form>
+            <form asp-action="Login" method="post">
+                <input type="hidden" asp-for="ReturnUrl" />
+                
+                <div asp-validation-summary="ModelOnly" class="text-danger small mb-3"></div>
+
                 <div class="mb-3">
-                    <label class="form-label small fw-bold text-secondary">Username</label>
+                    <label asp-for="Email" class="form-label small fw-bold text-secondary">Email Address</label>
                     <div class="input-group">
                         <span class="input-group-text bg-white border-end-0 text-muted">
-                            <i class="bi bi-person"></i>
+                            <i class="bi bi-envelope"></i>
                         </span>
-                        <input type="text" class="form-control border-start-0 ps-0" placeholder="e.g. kens_admin" readonly />
+                        <input asp-for="Email" class="form-control border-start-0 ps-0" placeholder="e.g. admin@furnitrack.com" />
                     </div>
-                    <div class="form-text mt-1" style="font-size: 0.75rem;">Backend pending: using static placeholder</div>
+                    <span asp-validation-for="Email" class="text-danger small"></span>
                 </div>
 
-                <div class="mb-4">
-                    <label class="form-label small fw-bold text-secondary">Password</label>
+                <div class="mb-3">
+                    <label asp-for="Password" class="form-label small fw-bold text-secondary">Password</label>
                     <div class="input-group">
                         <span class="input-group-text bg-white border-end-0 text-muted">
                             <i class="bi bi-lock"></i>
                         </span>
-                        <input type="password" class="form-control border-start-0 ps-0" placeholder="••••••••" readonly />
+                        <input asp-for="Password" class="form-control border-start-0 ps-0" placeholder="••••••••" />
+                    </div>
+                    <span asp-validation-for="Password" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-4 d-flex justify-content-between">
+                    <div class="form-check">
+                        <input asp-for="RememberMe" class="form-check-input" />
+                        <label asp-for="RememberMe" class="form-check-label small text-muted">Remember me</label>
                     </div>
                 </div>
 
                 <div class="d-grid gap-2">
-                    <a asp-controller="Home" asp-action="Dashboard" class="btn btn-primary py-2 fw-bold" style="background-color: #1a335d; border: none; border-radius: 6px;">
+                    <button type="submit" class="btn btn-primary py-2 fw-bold" style="background-color: #1a335d; border: none; border-radius: 6px;">
                         Login to Dashboard
-                    </a>
+                    </button>
                 </div>
 
                 <div class="mt-4 text-center">
-                    <a href="#" class="text-decoration-none small text-muted">Trouble logging in? Contact Support</a>
+                    <div class="alert alert-info py-2 px-3 small" style="font-size: 0.75rem;">
+                        <strong>Demo Access:</strong><br />
+                        Email: john.doe@furnitrack.com<br />
+                        Pass: Password123
+                    </div>
                 </div>
             </form>
 
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
