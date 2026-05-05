@@ -47,10 +47,35 @@
             <span class="input-group-text bg-transparent border-end-0">
                 <i class="bi bi-search text-muted"></i>
             </span>
-            <input type="text" class="form-control border-start-0 ps-0" placeholder="Search items...">
+            <!-- Added id="inventorySearch" to enable the script to find it -->
+            <input type="text" id="inventorySearch" class="form-control border-start-0 ps-0" placeholder="Search items...">
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const searchInput = document.getElementById('inventorySearch');
+        
+        searchInput.addEventListener('keyup', function () {
+            const searchTerm = this.value.toLowerCase();
+            // Targets all table rows inside the tbody of your existing table
+            const tableRows = document.querySelectorAll('table tbody tr');
+
+            tableRows.forEach(row => {
+                // This checks the text content of the row (Name, SKU, etc.)
+                const text = row.textContent.toLowerCase();
+                
+                // If the search term is found, show the row; otherwise, hide it
+                if (text.includes(searchTerm)) {
+                    row.style.display = "";
+                } else {
+                    row.style.display = "none";
+                }
+            });
+        });
+    });
+</script>
 
 <div class="card border-0 shadow-sm">
     <div class="table-responsive">

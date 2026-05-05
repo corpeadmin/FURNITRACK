@@ -11,14 +11,14 @@
 <body>
 
     @{
-        // Check if we are on the Index page to hide the sidebar
+        // Check if we are on the Index page OR if the user is not logged in to hide the sidebar
         var currentAction = ViewContext.RouteData.Values["Action"]?.ToString();
-        bool isIndexPage = currentAction == "Index";
+        bool isIndexPage = currentAction == "Index" || User.Identity?.IsAuthenticated != true;
     }
 
     @if (isIndexPage)
     {
-        @* SIDEBAR HIDDEN FOR INDEX.CSHTML *@
+        @* SIDEBAR HIDDEN FOR INDEX.CSHTML OR UNAUTHENTICATED USERS *@
         <main role="main">
             @RenderBody()
         </main>
@@ -101,6 +101,5 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
-    </script>
 </body>
 </html>

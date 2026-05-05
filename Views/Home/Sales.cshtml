@@ -13,10 +13,37 @@
         <div class="card border-0 shadow-sm h-100">
             <div class="card-header bg-white py-3 border-bottom-0 d-flex justify-content-between align-items-center">
                 <h5 class="fw-bold mb-0">Available Items</h5>
+                <!-- Search Bar HTML -->
                 <div class="input-group input-group-sm w-50">
                     <span class="input-group-text bg-transparent"><i class="bi bi-search"></i></span>
-                    <input type="text" class="form-control" placeholder="Search products...">
+                    <input type="text"
+                           id="productSearch"
+                           class="form-control"
+                           placeholder="Search products..."
+                           onkeyup="filterProducts()">
                 </div>
+
+                <!-- Search Logic Script -->
+                <script>
+                    function filterProducts() {
+                        const filter = document.getElementById('productSearch').value.toLowerCase();
+                        const cards = document.querySelectorAll('.item-card');
+
+                        cards.forEach(card => {
+                            // Target the product name within the card
+                            const name = card.querySelector('h6').textContent.toLowerCase();
+
+                            // Find the parent column (col-md-6) to hide/show the entire grid cell
+                            const column = card.closest('.col-md-6');
+
+                            if (name.includes(filter)) {
+                                column.style.display = "";
+                            } else {
+                                column.style.display = "none";
+                            }
+                        });
+                    }
+                </script>
             </div>
             <div class="card-body">
                 <div class="row g-3">
