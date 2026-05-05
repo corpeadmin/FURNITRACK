@@ -1,4 +1,5 @@
-﻿@{
+﻿@model FURNITRACK.ViewModels.SalesViewModel
+@{
     ViewData["Title"] = "Sales Management";
 }
 
@@ -10,59 +11,32 @@
 <div class="row g-4">
     <div class="col-lg-8">
         <div class="card border-0 shadow-sm h-100">
-            <div class="card-header bg-white py-3 border-bottom-0">
+            <div class="card-header bg-white py-3 border-bottom-0 d-flex justify-content-between align-items-center">
                 <h5 class="fw-bold mb-0">Available Items</h5>
+                <div class="input-group input-group-sm w-50">
+                    <span class="input-group-text bg-transparent"><i class="bi bi-search"></i></span>
+                    <input type="text" class="form-control" placeholder="Search products...">
+                </div>
             </div>
             <div class="card-body">
                 <div class="row g-3">
-                    <div class="col-md-6">
-                        <div class="card border shadow-none h-100 btn text-start p-0 overflow-hidden item-card"
-                             onclick="addToCart(1, 'Office Chair - Executive', 4250, 15)">
-                            <div class="p-3">
-                                <h6 class="fw-bold mb-1">Office Chair - Executive</h6>
-                                <div class="d-flex justify-content-between align-items-end mt-2">
-                                    <span class="text-primary fw-bold">₱4,250</span>
-                                    <small class="text-muted">Stock: 15</small>
+                    @foreach (var item in Model.Products)
+                    {
+                        <div class="col-md-6">
+                            <div class="card border shadow-none h-100 btn text-start p-0 overflow-hidden item-card @(item.QuantityInStock <= 0 ? "opacity-50" : "")"
+                                 onclick="@(item.QuantityInStock > 0 ? $"addToCart({item.ProductId}, '{item.Name.Replace("'", "\\'")}', {item.UnitPrice}, {item.QuantityInStock})" : "")">
+                                <div class="p-3">
+                                    <h6 class="fw-bold mb-1">@item.Name</h6>
+                                    <div class="d-flex justify-content-between align-items-end mt-2">
+                                        <span class="text-primary fw-bold">@item.UnitPrice.ToString("C", new System.Globalization.CultureInfo("en-PH"))</span>
+                                        <small class="@(item.QuantityInStock <= item.MinimumStockLevel ? "text-danger fw-bold" : "text-muted")">
+                                            Stock: @item.QuantityInStock
+                                        </small>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="card border shadow-none h-100 btn text-start p-0 overflow-hidden item-card"
-                             onclick="addToCart(2, 'Dining Table - Oak Wood', 12500, 8)">
-                            <div class="p-3">
-                                <h6 class="fw-bold mb-1">Dining Table - Oak Wood</h6>
-                                <div class="d-flex justify-content-between align-items-end mt-2">
-                                    <span class="text-primary fw-bold">₱12,500</span>
-                                    <small class="text-muted">Stock: 8</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="card border shadow-none h-100 btn text-start p-0 overflow-hidden item-card"
-                             onclick="addToCart(3, 'Bookshelf - 5-Tier', 3200, 3)">
-                            <div class="p-3">
-                                <h6 class="fw-bold mb-1">Bookshelf - 5-Tier</h6>
-                                <div class="d-flex justify-content-between align-items-end mt-2">
-                                    <span class="text-primary fw-bold">₱3,200</span>
-                                    <small class="text-warning fw-bold">Stock: 3</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="card border shadow-none h-100 btn text-start p-0 overflow-hidden item-card"
-                             onclick="addToCart(4, 'Coffee Table - Modern', 6750, 12)">
-                            <div class="p-3">
-                                <h6 class="fw-bold mb-1">Coffee Table - Modern</h6>
-                                <div class="d-flex justify-content-between align-items-end mt-2">
-                                    <span class="text-primary fw-bold">₱6,750</span>
-                                    <small class="text-muted">Stock: 12</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    }
                 </div>
             </div>
         </div>
@@ -97,22 +71,35 @@
                 <table class="table align-middle mb-0">
                     <thead class="table-light">
                         <tr>
-                            <th class="ps-4">Sale ID</th>
+                            <th class="ps-4">Order #</th>
+                            <th>Customer</th>
                             <th>Items</th>
                             <th>Total Amount</th>
-                            <th>Date & Time</th>
+                            <th>Status</th>
+                            <th>Date</th>
                         </tr>
                     </thead>
                     <tbody id="sales-history-body">
-                        <tr>
-                            <td class="ps-4 fw-bold">#0001</td>
-                            <td>
-                                <div class="small">Office Chair - Executive (x2)</div>
-                                <div class="small text-muted">Desk Lamp - LED (x3)</div>
-                            </td>
-                            <td class="fw-bold text-success">₱11,170</td>
-                            <td class="text-muted small">4/22/2026, 1:28:56 PM</td>
-                        </tr>
+                        @foreach (var sale in Model.Sales)
+                        {
+                            <tr>
+                                <td class="ps-4 fw-bold">@sale.OrderNumber</td>
+                                <td>@sale.CustomerName</td>
+                                <td>
+                                    @foreach (var item in sale.SalesItems)
+                                    {
+                                        <div class="small">@(item.Product?.Name ?? "Product") (x@item.Quantity)</div>
+                                    }
+                                </td>
+                                <td class="fw-bold text-success">@sale.TotalAmount.ToString("C", new System.Globalization.CultureInfo("en-PH"))</td>
+                                <td>
+                                    <span class="badge @(sale.Status == "Delivered" ? "bg-success-subtle text-success" : "bg-warning-subtle text-warning") px-3">
+                                        @sale.Status
+                                    </span>
+                                </td>
+                                <td class="text-muted small">@sale.SalesDate.ToString("g")</td>
+                            </tr>
+                        }
                     </tbody>
                 </table>
             </div>
@@ -197,31 +184,48 @@
         recordBtn.classList.remove('opacity-50');
     }
 
-    function recordSale() {
-        const historyBody = document.getElementById('sales-history-body');
-        const totalStr = document.getElementById('cart-total').innerText;
-        const now = new Date().toLocaleString();
+    async function recordSale() {
+        if (cart.length === 0) return;
 
-        // Build items string for history
-        const itemsHtml = cart.map(item => `<div class="small">${item.name} (x${item.quantity})</div>`).join('');
+        const recordBtn = document.getElementById('record-sale-btn');
+        recordBtn.disabled = true;
+        recordBtn.innerText = 'Processing...';
 
-        // Create new row
-        const newRow = `
-            <tr>
-                <td class="ps-4 fw-bold">#${String(saleCounter++).padStart(4, '0')}</td>
-                <td>${itemsHtml}</td>
-                <td class="fw-bold text-success">${totalStr}</td>
-                <td class="text-muted small">${now}</td>
-            </tr>
-        `;
+        const saleData = {
+            customerName: "Walk-in Customer", // Could be expanded to a form
+            customerEmail: "walkin@example.com",
+            items: cart.map(item => ({
+                productId: item.id,
+                quantity: item.quantity,
+                price: item.price
+            }))
+        };
 
-        // Prepend to table (add to top)
-        historyBody.insertAdjacentHTML('afterbegin', newRow);
+        try {
+            const response = await fetch('/Home/RecordSale', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(saleData)
+            });
 
-        // Clear cart
-        cart = [];
-        renderCart();
-        alert("Sale recorded!");
+            if (response.ok) {
+                const result = await response.json();
+                alert(`Sale recorded successfully! Order: ${result.orderNumber}`);
+                location.reload(); // Reload to refresh history and stock levels
+            } else {
+                const error = await response.text();
+                alert(`Error recording sale: ${error}`);
+                recordBtn.disabled = false;
+                recordBtn.innerText = 'Record Sale';
+            }
+        } catch (err) {
+            console.error('Sale error:', err);
+            alert('An unexpected error occurred.');
+            recordBtn.disabled = false;
+            recordBtn.innerText = 'Record Sale';
+        }
     }
 </script>
 

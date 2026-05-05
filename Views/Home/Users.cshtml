@@ -1,4 +1,5 @@
-﻿@{
+﻿@model FURNITRACK.ViewModels.UsersViewModel
+@{
     ViewData["Title"] = "User Management";
 }
 
@@ -17,8 +18,32 @@
         </div>
     </div>
 
+    <div class="row g-4 mb-4">
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm p-3">
+                <p class="text-muted small mb-1">Total Users</p>
+                <h4 class="fw-bold mb-0">@Model.TotalUsers</h4>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm p-3">
+                <p class="text-muted small mb-1">Active Accounts</p>
+                <h4 class="fw-bold mb-0 text-success">@Model.ActiveUsers</h4>
+            </div>
+        </div>
+        @foreach (var role in Model.UsersByRole)
+        {
+            <div class="col-md-3">
+                <div class="card border-0 shadow-sm p-3">
+                    <p class="text-muted small mb-1">@role.Key Accounts</p>
+                    <h4 class="fw-bold mb-0">@role.Value</h4>
+                </div>
+            </div>
+        }
+    </div>
+
     <div class="row g-4">
-        <div class="col-lg-8">
+        <div class="col-lg-12">
             <div class="card border-0 shadow-sm">
                 <div class="card-header bg-white border-bottom py-3">
                     <h5 class="card-title mb-0">User Accounts</h5>
@@ -29,52 +54,110 @@
                             <tr>
                                 <th class="ps-4">Name</th>
                                 <th>Email</th>
+                                <th>Department</th>
                                 <th>Role</th>
                                 <th>Status</th>
-                                <th>Last Login</th>
+                                <th>Hire Date</th>
                                 <th class="text-end pe-4">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td class="ps-4">
-                                    <div class="d-flex align-items-center">
-                                        <div class="avatar-placeholder me-3"><i class="bi bi-person"></i></div>
-                                        <span class="fw-medium">Maria Santos</span>
+                            @foreach (var user in Model.Users)
+                            {
+                                <tr>
+                                    <td class="ps-4">
+                                        <div class="d-flex align-items-center">
+                                            <div class="avatar-placeholder me-3"><i class="bi bi-person"></i></div>
+                                            <span class="fw-medium">@user.FirstName @user.LastName</span>
+                                        </div>
+                                    </td>
+                                    <td>@user.Email</td>
+                                    <td>@user.Department</td>
+                                    <td>
+                                        <span class="badge rounded-pill bg-light text-dark border px-3">@user.Role</span>
+                                    </td>
+                                    <td>
+                                        @if (user.IsActive)
+                                        {
+                                            <span class="text-success fw-bold">Active</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-danger fw-bold">Inactive</span>
+                                        }
+                                    </td>
+                                    <td class="text-muted small">@user.HireDate.ToString("yyyy-MM-dd")</td>
+                                    <td class="text-end pe-4">
+                                        <button class="btn btn-link btn-sm text-primary p-0 me-2"
+                                                data-bs-toggle="modal" data-bs-target="#editUserModal-@user.UserId">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </button>
+                                        <form asp-action="DeleteUser" method="post" class="d-inline">
+                                            <input type="hidden" name="id" value="@user.UserId" />
+                                            <button type="submit" class="btn btn-link btn-sm text-danger p-0" onclick="return confirm('Are you sure you want to deactivate this user?')">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+
+                                <!-- Edit User Modal -->
+                                <div class="modal fade" id="editUserModal-@user.UserId" tabindex="-1" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content border-0 shadow">
+                                            <div class="modal-header border-0 pb-0">
+                                                <h5 class="modal-title fw-bold">Edit User</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body pt-4">
+                                                <form asp-action="EditUser" method="post">
+                                                    <input type="hidden" name="UserId" value="@user.UserId" />
+                                                    <div class="row mb-3">
+                                                        <div class="col">
+                                                            <label class="form-label fw-bold small">First Name</label>
+                                                            <input type="text" name="FirstName" class="form-control form-control-lg fs-6" value="@user.FirstName" required>
+                                                        </div>
+                                                        <div class="col">
+                                                            <label class="form-label fw-bold small">Last Name</label>
+                                                            <input type="text" name="LastName" class="form-control form-control-lg fs-6" value="@user.LastName" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label class="form-label fw-bold small">Email Address</label>
+                                                        <input type="email" name="Email" class="form-control form-control-lg fs-6" value="@user.Email" required>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label class="form-label fw-bold small">Password</label>
+                                                        <input type="password" name="Password" class="form-control form-control-lg fs-6" value="@user.Password" required>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label class="form-label fw-bold small">Role</label>
+                                                        <select name="Role" class="form-select form-control-lg fs-6">
+                                                            <!option value="Staff" @(user.Role == "Staff" ? "selected" : "")>Staff</!option>
+                                                            <!option value="Manager" @(user.Role == "Manager" ? "selected" : "")>Manager</!option>
+                                                            <!option value="Admin" @(user.Role == "Admin" ? "selected" : "")>Admin</!option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="mb-4">
+                                                        <label class="form-label fw-bold small">Department</label>
+                                                        <input type="text" name="Department" class="form-control form-control-lg fs-6" value="@user.Department">
+                                                    </div>
+                                                    <div class="row g-2">
+                                                        <div class="col">
+                                                            <button type="button" class="btn btn-light w-100 py-2" data-bs-dismiss="modal" style="background-color: #f0efeb;">Cancel</button>
+                                                        </div>
+                                                        <div class="col">
+                                                            <button type="submit" class="btn btn-primary w-100 py-2" style="background-color: #1a2b4b;">Update User</button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
                                     </div>
-                                </td>
-                                <td>maria@kensmarketing.com</td>
-                                <td><span class="badge rounded-pill bg-light text-dark border px-3">Staff</span></td>
-                                <td><span class="text-success fw-bold">Active</span></td>
-                                <td class="text-muted small">2026-04-21<br />09:15</td>
-                                <td class="text-end pe-4">
-                                    <button class="btn btn-link btn-sm text-primary p-0 me-2"
-                                            data-bs-toggle="modal" data-bs-target="#editUserModal">
-                                        <i class="bi bi-pencil-square"></i>
-                                    </button>
-                                    <button class="btn btn-link btn-sm text-danger p-0"><i class="bi bi-trash"></i></button>
-                                </td>
-                            </tr>
+                                </div>
+                            }
                         </tbody>
                     </table>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-4">
-            <div class="card border-0 shadow-sm mb-4">
-                <div class="card-body">
-                    <h6 class="fw-bold d-flex align-items-center mb-3">
-                        <i class="bi bi-shield-check text-primary me-2"></i> Owner Permissions
-                    </h6>
-                    <ul class="list-unstyled mb-0">
-                        <li class="small mb-2"><i class="bi bi-check2 text-success me-2"></i> Full system access</li>
-                        <li class="small mb-2"><i class="bi bi-check2 text-success me-2"></i> Manage users</li>
-                        <li class="small mb-2"><i class="bi bi-check2 text-success me-2"></i> View all reports</li>
-                        <li class="small mb-2"><i class="bi bi-check2 text-success me-2"></i> Manage inventory</li>
-                        <li class="small mb-2"><i class="bi bi-check2 text-success me-2"></i> Process sales</li>
-                        <li class="small"><i class="bi bi-check2 text-success me-2"></i> Configure settings</li>
-                    </ul>
                 </div>
             </div>
         </div>
@@ -89,25 +172,36 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body pt-4">
-                <form>
-                    <div class="mb-3">
-                        <label class="form-label fw-bold small">Full Name</label>
-                        <input type="text" class="form-control form-control-lg fs-6" placeholder="">
+                <form asp-action="CreateUser" method="post">
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label class="form-label fw-bold small">First Name</label>
+                            <input type="text" name="FirstName" class="form-control form-control-lg fs-6" placeholder="First Name" required>
+                        </div>
+                        <div class="col">
+                            <label class="form-label fw-bold small">Last Name</label>
+                            <input type="text" name="LastName" class="form-control form-control-lg fs-6" placeholder="Last Name" required>
+                        </div>
                     </div>
                     <div class="mb-3">
                         <label class="form-label fw-bold small">Email Address</label>
-                        <input type="email" class="form-control form-control-lg fs-6" placeholder="">
+                        <input type="email" name="Email" class="form-control form-control-lg fs-6" placeholder="email@example.com" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold small">Password</label>
+                        <input type="password" name="Password" class="form-control form-control-lg fs-6" placeholder="Minimum 8 characters" required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label fw-bold small">Role</label>
-                        <select class="form-select form-control-lg fs-6">
-                            <option selected>Staff</option>
-                            <option>Owner</option>
+                        <select name="Role" class="form-select form-control-lg fs-6">
+                            <option value="Staff" selected>Staff</option>
+                            <option value="Manager">Manager</option>
+                            <option value="Admin">Admin</option>
                         </select>
                     </div>
                     <div class="mb-4">
-                        <label class="form-label fw-bold small">Password</label>
-                        <input type="password" class="form-control form-control-lg fs-6" placeholder="Minimum 8 characters">
+                        <label class="form-label fw-bold small">Department</label>
+                        <input type="text" name="Department" class="form-control form-control-lg fs-6" placeholder="e.g. Sales">
                     </div>
                     <div class="row g-2">
                         <div class="col">
@@ -115,44 +209,6 @@
                         </div>
                         <div class="col">
                             <button type="submit" class="btn btn-primary w-100 py-2" style="background-color: #1a2b4b;">Add User</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="editUserModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content border-0 shadow">
-            <div class="modal-header border-0 pb-0">
-                <h5 class="modal-title fw-bold">Edit User</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body pt-4">
-                <form>
-                    <div class="mb-3">
-                        <label class="form-label fw-bold small">Full Name</label>
-                        <input type="text" class="form-control form-control-lg fs-6" value="Maria Santos">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label fw-bold small">Email Address</label>
-                        <input type="email" class="form-control form-control-lg fs-6" value="maria@kensmarketing.com">
-                    </div>
-                    <div class="mb-4">
-                        <label class="form-label fw-bold small">Role</label>
-                        <select class="form-select form-control-lg fs-6">
-                            <option selected>Staff</option>
-                            <option>Owner</option>
-                        </select>
-                    </div>
-                    <div class="row g-2">
-                        <div class="col">
-                            <button type="button" class="btn btn-light w-100 py-2" data-bs-dismiss="modal" style="background-color: #f0efeb;">Cancel</button>
-                        </div>
-                        <div class="col">
-                            <button type="submit" class="btn btn-primary w-100 py-2" style="background-color: #1a2b4b;">Update User</button>
                         </div>
                     </div>
                 </form>

@@ -36,27 +36,51 @@
                     <small class="text-white-50">Furniture Inventory Management</small>
                 </div>
 
+                @if (User.Identity?.IsAuthenticated == true)
+                {
+                    <div class="px-4 mb-4">
+                        <div class="d-flex align-items-center">
+                            <div class="rounded-circle bg-white text-primary d-flex align-items-center justify-content-center me-2" style="width: 32px; height: 32px;">
+                                <i class="bi bi-person-fill"></i>
+                            </div>
+                            <div>
+                                <p class="mb-0 small fw-bold">@User.Identity.Name</p>
+                                <small class="text-white-50" style="font-size: 0.7rem;">@User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value</small>
+                            </div>
+                        </div>
+                    </div>
+                }
+
                 <div class="list-group list-group-flush px-3">
                     @* Working Redirects *@
                     <a asp-controller="Home" asp-action="Dashboard" class="list-group-item list-group-item-action bg-transparent text-white border-0 py-2 rounded mb-1 @(currentAction == "Dashboard" ? "active-link" : "")">
                         <i class="bi bi-grid-1x2-fill me-2"></i> Dashboard
                     </a>
+
                     <a asp-controller="Home" asp-action="Inventory" class="list-group-item list-group-item-action bg-transparent text-white border-0 py-2 rounded mb-1 @(currentAction == "Inventory" ? "active-link" : "")">
                         <i class="bi bi-box-seam me-2"></i> Inventory
                     </a>
+
                     <a asp-controller="Home" asp-action="Sales" class="list-group-item list-group-item-action bg-transparent text-white border-0 py-2 rounded mb-1 @(currentAction == "Sales" ? "active-link" : "")">
                         <i class="bi bi-cart me-2"></i> Sales
                     </a>
-                    <a asp-controller="Home" asp-action="Reports" class="list-group-item list-group-item-action bg-transparent text-white border-0 py-2 rounded mb-1 @(currentAction == "Reports" ? "active-link" : "")">
-                        <i class="bi bi-bar-chart-line me-2"></i> Reports
-                    </a>
-                    <a asp-controller="Home" asp-action="Users" class="list-group-item list-group-item-action bg-transparent text-white border-0 py-2 rounded mb-1 @(currentAction == "Users" ? "active-link" : "")">
-                        <i class="bi bi-people me-2"></i> Users
-                    </a>
+
+                    @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+                    {
+                        <a asp-controller="Home" asp-action="Reports" class="list-group-item list-group-item-action bg-transparent text-white border-0 py-2 rounded mb-1 @(currentAction == "Reports" ? "active-link" : "")">
+                            <i class="bi bi-bar-chart-line me-2"></i> Reports
+                        </a>
+                    }
+
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a asp-controller="Home" asp-action="Users" class="list-group-item list-group-item-action bg-transparent text-white border-0 py-2 rounded mb-1 @(currentAction == "Users" ? "active-link" : "")">
+                            <i class="bi bi-people me-2"></i> Users
+                        </a>
+                    }
 
                     <div class="mt-5 pt-5">
-                        @* Logout: Static button, no function *@
-                        <a href="#" class="list-group-item list-group-item-action bg-transparent text-white border-0 py-2">
+                        <a asp-controller="Home" asp-action="Logout" class="list-group-item list-group-item-action bg-transparent text-white border-0 py-2">
                             <i class="bi bi-box-arrow-left me-2"></i> Logout
                         </a>
                     </div>
