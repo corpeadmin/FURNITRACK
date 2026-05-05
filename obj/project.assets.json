@@ -4022,11 +4022,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Filbert\\kali-workspace\\FURNITRACK\\FURNITRACK.csproj",
+      "projectUniqueName": "D:\\2ndSem2026\\IAS\\FURNITRACK\\FURNITRACK.csproj",
       "projectName": "FURNITRACK",
-      "projectPath": "C:\\Users\\Filbert\\kali-workspace\\FURNITRACK\\FURNITRACK.csproj",
+      "projectPath": "D:\\2ndSem2026\\IAS\\FURNITRACK\\FURNITRACK.csproj",
       "packagesPath": "C:\\Users\\Filbert\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Filbert\\kali-workspace\\FURNITRACK\\obj\\",
+      "outputPath": "D:\\2ndSem2026\\IAS\\FURNITRACK\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
