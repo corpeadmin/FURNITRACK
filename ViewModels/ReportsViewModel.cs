@@ -23,6 +23,8 @@ namespace FURNITRACK.ViewModels
         // Top performers
         public List<TopProductDTO> TopProducts { get; set; } = new List<TopProductDTO>();
         public List<TopCategoryDTO> TopCategories { get; set; } = new List<TopCategoryDTO>();
+        //  update 111
+        public string SalesChartData { get; set; }
     }
 
     public class TopProductDTO

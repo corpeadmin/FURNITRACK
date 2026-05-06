@@ -3,28 +3,30 @@
     ViewData["Title"] = "Reports & Analytics";
 }
 
-<div class="reports-container">
+<div class="reports-container p-3">
     @* HEADER SECTION *@
-    <div class="d-flex justify-content-between align-items-center mb-4">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
         <div>
             <h2 class="fw-bold mb-1" style="color: #1e293b;">Reports & Analytics</h2>
-            <p class="text-muted">Track sales performance and inventory metrics</p>
+            <p class="text-muted mb-0">Track sales performance and inventory metrics</p>
         </div>
 
         @* DATE FILTER *@
-        <div class="d-flex align-items-center bg-white border rounded-3 px-3 py-1 shadow-sm" style="border-color: #e2e8f0 !important;">
-            <i class="bi bi-calendar3 text-muted me-2"></i>
-            <span class="text-muted small fw-medium">@Model.StartDate.ToString("MMM dd") - @Model.EndDate.ToString("MMM dd, yyyy")</span>
+        <div class="d-flex align-items-center bg-white border rounded-3 px-3 py-2 shadow-sm date-badge">
+            <i class="bi bi-calendar3 text-primary me-2"></i>
+            <span class="text-dark small fw-semibold">
+                @Model.StartDate.ToString("MMM dd") - @Model.EndDate.ToString("MMM dd, yyyy")
+            </span>
         </div>
     </div>
 
     @* SUMMARY CARDS *@
     <div class="row g-4 mb-5">
-        <div class="col-md-3">
-            <div class="card border shadow-sm p-3 h-100 border-light">
+        <div class="col-sm-6 col-xl-3">
+            <div class="card border-0 shadow-sm p-3 h-100 summary-card">
                 <div class="d-flex align-items-center">
-                    <div class="rounded-3 p-3 me-3" style="background-color: #f1f5f9;">
-                        <i class="bi bi-currency-dollar fs-4" style="color: #475569;"></i>
+                    <div class="icon-shape bg-soft-slate me-3">
+                        <i class="bi bi-currency-dollar fs-4 text-slate"></i>
                     </div>
                     <div>
                         <small class="text-muted d-block fw-medium">Total Revenue</small>
@@ -34,11 +36,11 @@
             </div>
         </div>
 
-        <div class="col-md-3">
-            <div class="card border shadow-sm p-3 h-100 border-light">
+        <div class="col-sm-6 col-xl-3">
+            <div class="card border-0 shadow-sm p-3 h-100 summary-card">
                 <div class="d-flex align-items-center">
-                    <div class="rounded-3 p-3 me-3" style="background-color: #f0fdf4;">
-                        <i class="bi bi-cart-check fs-4" style="color: #22c55e;"></i>
+                    <div class="icon-shape bg-soft-success me-3">
+                        <i class="bi bi-cart-check fs-4 text-success"></i>
                     </div>
                     <div>
                         <small class="text-muted d-block fw-medium">Orders Placed</small>
@@ -48,11 +50,11 @@
             </div>
         </div>
 
-        <div class="col-md-3">
-            <div class="card border shadow-sm p-3 h-100 border-light">
+        <div class="col-sm-6 col-xl-3">
+            <div class="card border-0 shadow-sm p-3 h-100 summary-card">
                 <div class="d-flex align-items-center">
-                    <div class="rounded-3 p-3 me-3" style="background-color: #fffbeb;">
-                        <i class="bi bi-bag-check fs-4" style="color: #f59e0b;"></i>
+                    <div class="icon-shape bg-soft-warning me-3">
+                        <i class="bi bi-bag-check fs-4 text-warning"></i>
                     </div>
                     <div>
                         <small class="text-muted d-block fw-medium">Avg. Order Value</small>
@@ -62,11 +64,11 @@
             </div>
         </div>
 
-        <div class="col-md-3">
-            <div class="card border shadow-sm p-3 h-100 border-light">
+        <div class="col-sm-6 col-xl-3">
+            <div class="card border-0 shadow-sm p-3 h-100 summary-card">
                 <div class="d-flex align-items-center">
-                    <div class="rounded-3 p-3 me-3" style="background-color: #f1f5f9;">
-                        <i class="bi bi-box-seam fs-4" style="color: #475569;"></i>
+                    <div class="icon-shape bg-soft-info me-3">
+                        <i class="bi bi-box-seam fs-4 text-info"></i>
                     </div>
                     <div>
                         <small class="text-muted d-block fw-medium">Inventory Value</small>
@@ -77,45 +79,70 @@
         </div>
     </div>
 
-    @* INVENTORY METRICS *@
-    <div class="row g-4 mb-5">
-        <div class="col-md-6">
-            <div class="card border shadow-sm h-100 border-light">
+    @* MAIN ANALYTICS SECTION *@
+    <div class="row g-4">
+        @* INVENTORY HEALTH CARD *@
+        <div class="col-lg-5">
+            <div class="card border-0 shadow-sm h-100">
                 <div class="card-header bg-white py-3 border-0">
                     <h5 class="fw-bold mb-0">Inventory Health</h5>
                 </div>
                 <div class="card-body">
                     <div class="d-flex justify-content-between mb-2">
-                        <span>Total Products</span>
+                        <span class="text-muted">Total Products</span>
                         <span class="fw-bold">@Model.TotalProducts</span>
                     </div>
                     <div class="d-flex justify-content-between mb-2">
-                        <span>Low Stock Items</span>
+                        <span class="text-muted">Low Stock Items</span>
                         <span class="fw-bold text-danger">@Model.LowStockItems</span>
                     </div>
-                    <div class="progress mt-3" style="height: 10px;">
-                        @{
-                            double healthyPercent = Model.TotalProducts > 0 ? ((double)(Model.TotalProducts - Model.LowStockItems) / Model.TotalProducts) * 100 : 0;
-                        }
-                        <div class="progress-bar bg-success" role="progressbar" style="width: @healthyPercent%" aria-valuenow="@healthyPercent" aria-valuemin="0" aria-valuemax="100"></div>
-                        <div class="progress-bar bg-danger" role="progressbar" style="width: @(100 - healthyPercent)%" aria-valuenow="@(100 - healthyPercent)" aria-valuemin="0" aria-valuemax="100"></div>
+
+                    @{
+                        double total = Model.TotalProducts;
+                        double low = Model.LowStockItems;
+                        double healthyPercent = total > 0 ? ((total - low) / total) * 100 : 0;
+                        double lowPercent = total > 0 ? (low / total) * 100 : 0;
+                    }
+
+                    <div class="progress mt-4 mb-4" style="height: 12px; border-radius: 20px; background-color: #f1f5f9;">
+                        <div class="progress-bar bg-success" role="progressbar"
+                             style="width: @healthyPercent.ToString("0")%; transition: width 0.8s ease;"
+                             aria-valuenow="@healthyPercent" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress-bar bg-danger" role="progressbar"
+                             style="width: @lowPercent.ToString("0")%; transition: width 0.8s ease;"
+                             aria-valuenow="@lowPercent" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
-                    <div class="d-flex justify-content-between mt-2 small text-muted">
-                        <span>Healthy (@((int)healthyPercent)%)</span>
-                        <span>Low Stock (@(100 - (int)healthyPercent)%)</span>
+
+                    <div class="row text-center mt-2">
+                        <div class="col-6 border-end">
+                            <div class="d-flex align-items-center justify-content-center mb-1">
+                                <span class="dot bg-success me-2"></span>
+                                <span class="small text-muted fw-medium">Healthy</span>
+                            </div>
+                            <h6 class="fw-bold mb-0">@healthyPercent.ToString("0")%</h6>
+                        </div>
+                        <div class="col-6">
+                            <div class="d-flex align-items-center justify-content-center mb-1">
+                                <span class="dot bg-danger me-2"></span>
+                                <span class="small text-muted fw-medium">Low Stock</span>
+                            </div>
+                            <h6 class="fw-bold mb-0">@lowPercent.ToString("0")%</h6>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
-            <div class="card border shadow-sm h-100 border-light">
-                <div class="card-header bg-white py-3 border-0">
+
+        @* SALES CHART CARD *@
+        <div class="col-lg-7">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-header bg-white py-3 border-0 d-flex justify-content-between align-items-center">
                     <h5 class="fw-bold mb-0">Sales Performance</h5>
+                    <span class="badge bg-soft-primary text-primary px-2 py-2">Monthly Overview</span>
                 </div>
-                <div class="card-body d-flex align-items-center justify-content-center">
-                    <div class="text-center">
-                        <i class="bi bi-pie-chart fs-1 text-muted mb-3 d-block"></i>
-                        <p class="text-muted">Graphical analytics will be integrated with Chart.js in the next phase.</p>
+                <div class="card-body">
+                    <div style="position: relative; height: 250px; width: 100%;">
+                        <canvas id="salesChart"></canvas>
                     </div>
                 </div>
             </div>
@@ -124,28 +151,148 @@
 </div>
 
 <style>
-    .reports-container {
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    :root {
+        --slate-600: #475569;
+        --blue-600: #2563eb;
     }
 
-    .card {
+    .reports-container {
+        font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        background-color: #f8fafc;
+    }
+
+    .summary-card {
+        border-radius: 12px;
+        border: 1px solid #f1f5f9 !important;
+    }
+
+    .icon-shape {
+        width: 48px;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         border-radius: 10px;
     }
 
-    .table thead th {
-        font-size: 0.75rem;
-        letter-spacing: 0.05rem;
+    /* Soft Color Themes */
+    .bg-soft-slate {
+        background-color: #f1f5f9;
     }
 
-    .table tbody td {
-        padding-top: 1.25rem;
-        padding-bottom: 1.25rem;
-        border-bottom: 1px solid #f1f5f9;
-        font-size: 0.95rem;
+    .text-slate {
+        color: #475569;
     }
 
-    .badge {
-        font-weight: 600;
-        font-size: 0.8rem;
+    .bg-soft-success {
+        background-color: #f0fdf4;
+    }
+
+    .bg-soft-warning {
+        background-color: #fffbeb;
+    }
+
+    .bg-soft-info {
+        background-color: #f0f9ff;
+    }
+
+    .bg-soft-primary {
+        background-color: #eff6ff;
+    }
+
+    .dot {
+        height: 8px;
+        width: 8px;
+        border-radius: 50%;
+    }
+
+    .progress-bar {
+        box-shadow: none;
+    }
+
+    .date-badge {
+        border-color: #e2e8f0 !important;
+    }
+
+    /* Animation on hover */
+    .summary-card:hover {
+        transform: translateY(-3px);
+        transition: transform 0.2s ease;
+    }
+
+    @@media (max-width: 768px) {
+        .reports-container {
+            padding: 0.5rem;
+        }
     }
 </style>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Parse data from Model
+            const rawData = @Html.Raw(Model.SalesChartData ?? "[]");
+
+            const labels = rawData.map(d => d.Date);
+            const values = rawData.map(d => d.Amount);
+
+            const ctx = document.getElementById('salesChart').getContext('2d');
+
+            // Create Gradient
+            const gradient = ctx.createLinearGradient(0, 0, 0, 250);
+            gradient.addColorStop(0, 'rgba(37, 99, 235, 0.2)');
+            gradient.addColorStop(1, 'rgba(37, 99, 235, 0)');
+
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Daily Revenue',
+                        data: values,
+                        fill: true,
+                        backgroundColor: gradient,
+                        borderColor: '#2563eb',
+                        borderWidth: 3,
+                        pointBackgroundColor: '#fff',
+                        pointBorderColor: '#2563eb',
+                        pointRadius: 4,
+                        pointHoverRadius: 6,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: '#1e293b',
+                            padding: 12,
+                            displayColors: false,
+                            callbacks: {
+                                label: function(context) {
+                                    return ' ₱' + context.parsed.y.toLocaleString();
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: { color: '#f1f5f9', drawBorder: false },
+                            ticks: {
+                                callback: value => '₱' + value.toLocaleString(),
+                                font: { size: 11 }
+                            }
+                        },
+                        x: {
+                            grid: { display: false }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+}

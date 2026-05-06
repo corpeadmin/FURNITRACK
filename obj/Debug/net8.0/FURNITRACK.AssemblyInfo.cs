@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FURNITRACK")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a0e8efb40c86fa497330ab0c61a9148ef2e8f110")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+18f22f0b59bd50cbd471f57205cab60b9362112f")]
 [assembly: System.Reflection.AssemblyProductAttribute("FURNITRACK")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FURNITRACK")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

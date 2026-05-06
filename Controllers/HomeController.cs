@@ -317,33 +317,40 @@ namespace FURNITRACK.Controllers
                 return StatusCode(500, "Internal server error.");
             }
         }
-
+        // update 111
         [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> Reports()
         {
             try
             {
-                var startOfMonth = DateTime.Now.AddMonths(-1);
+                var startOfMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
                 var endOfMonth = DateTime.Now;
 
                 var salesThisMonth = await _salesService.GetSalesByDateRangeAsync(startOfMonth, endOfMonth);
                 var allProducts = await _productService.GetAllProductsAsync();
-                var categories = await _categoryService.GetAllCategoriesAsync();
                 var lowStockProducts = await _productService.GetLowStockProductsAsync();
 
-                decimal totalSales = salesThisMonth.Sum(s => s.TotalAmount);
-                decimal averageOrderValue = salesThisMonth.Count > 0 ? totalSales / salesThisMonth.Count : 0;
+                // Prepare data for the chart: Group sales by date
+                var chartData = salesThisMonth
+                    .GroupBy(s => s.SalesDate.Date)
+                    .OrderBy(g => g.Key)
+                    .Select(g => new {
+                        Date = g.Key.ToString("MMM dd"),
+                        Amount = g.Sum(s => s.TotalAmount)
+                    }).ToList();
 
                 var viewModel = new ReportsViewModel
                 {
                     StartDate = startOfMonth,
                     EndDate = endOfMonth,
-                    TotalSales = totalSales,
+                    TotalSales = salesThisMonth.Sum(s => s.TotalAmount),
                     TotalOrders = salesThisMonth.Count,
-                    AverageOrderValue = averageOrderValue,
+                    AverageOrderValue = salesThisMonth.Count > 0 ? salesThisMonth.Sum(s => s.TotalAmount) / salesThisMonth.Count : 0,
                     TotalProducts = allProducts.Count,
                     LowStockItems = lowStockProducts.Count,
-                    TotalInventoryValue = allProducts.Sum(p => p.UnitPrice * p.QuantityInStock)
+                    TotalInventoryValue = allProducts.Sum(p => p.UnitPrice * p.QuantityInStock),
+                    // Pass the serialized data to the view
+                    SalesChartData = System.Text.Json.JsonSerializer.Serialize(chartData)
                 };
 
                 return View(viewModel);
