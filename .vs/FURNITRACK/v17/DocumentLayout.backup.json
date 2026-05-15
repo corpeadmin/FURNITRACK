@@ -3,16 +3,60 @@
   "WorkspaceRootPath": "C:\\Users\\loki\\source\\repos\\FURNITRACK\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{59F02EAF-16CF-415D-AC04-7E51ED781D3A}|FURNITRACK.csproj|c:\\users\\loki\\source\\repos\\furnitrack\\views\\home\\dashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{59F02EAF-16CF-415D-AC04-7E51ED781D3A}|FURNITRACK.csproj|solutionrelative:views\\home\\dashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{59F02EAF-16CF-415D-AC04-7E51ED781D3A}|FURNITRACK.csproj|c:\\users\\loki\\source\\repos\\furnitrack\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{59F02EAF-16CF-415D-AC04-7E51ED781D3A}|FURNITRACK.csproj|solutionrelative:views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{59F02EAF-16CF-415D-AC04-7E51ED781D3A}|FURNITRACK.csproj|c:\\users\\loki\\source\\repos\\furnitrack\\views\\home\\reports.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{59F02EAF-16CF-415D-AC04-7E51ED781D3A}|FURNITRACK.csproj|solutionrelative:views\\home\\reports.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{59F02EAF-16CF-415D-AC04-7E51ED781D3A}|FURNITRACK.csproj|c:\\users\\loki\\source\\repos\\furnitrack\\viewmodels\\dashboardviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{59F02EAF-16CF-415D-AC04-7E51ED781D3A}|FURNITRACK.csproj|solutionrelative:viewmodels\\dashboardviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{59F02EAF-16CF-415D-AC04-7E51ED781D3A}|FURNITRACK.csproj|c:\\users\\loki\\source\\repos\\furnitrack\\viewmodels\\inventoryviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{59F02EAF-16CF-415D-AC04-7E51ED781D3A}|FURNITRACK.csproj|solutionrelative:viewmodels\\inventoryviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{59F02EAF-16CF-415D-AC04-7E51ED781D3A}|FURNITRACK.csproj|c:\\users\\loki\\source\\repos\\furnitrack\\views\\home\\sales.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{59F02EAF-16CF-415D-AC04-7E51ED781D3A}|FURNITRACK.csproj|solutionrelative:views\\home\\sales.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{59F02EAF-16CF-415D-AC04-7E51ED781D3A}|FURNITRACK.csproj|c:\\users\\loki\\source\\repos\\furnitrack\\views\\home\\inventory.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{59F02EAF-16CF-415D-AC04-7E51ED781D3A}|FURNITRACK.csproj|solutionrelative:views\\home\\inventory.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{59F02EAF-16CF-415D-AC04-7E51ED781D3A}|FURNITRACK.csproj|c:\\users\\loki\\source\\repos\\furnitrack\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{59F02EAF-16CF-415D-AC04-7E51ED781D3A}|FURNITRACK.csproj|solutionrelative:views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{59F02EAF-16CF-415D-AC04-7E51ED781D3A}|FURNITRACK.csproj|c:\\users\\loki\\source\\repos\\furnitrack\\architecture_diagrams.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}",
+      "RelativeMoniker": "D:0:0:{59F02EAF-16CF-415D-AC04-7E51ED781D3A}|FURNITRACK.csproj|solutionrelative:architecture_diagrams.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{59F02EAF-16CF-415D-AC04-7E51ED781D3A}|FURNITRACK.csproj|c:\\users\\loki\\source\\repos\\furnitrack\\views\\_viewimports.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{59F02EAF-16CF-415D-AC04-7E51ED781D3A}|FURNITRACK.csproj|solutionrelative:views\\_viewimports.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{59F02EAF-16CF-415D-AC04-7E51ED781D3A}|FURNITRACK.csproj|c:\\users\\loki\\source\\repos\\furnitrack\\views\\home\\users.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{59F02EAF-16CF-415D-AC04-7E51ED781D3A}|FURNITRACK.csproj|solutionrelative:views\\home\\users.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{59F02EAF-16CF-415D-AC04-7E51ED781D3A}|FURNITRACK.csproj|c:\\users\\loki\\source\\repos\\furnitrack\\views\\shared\\_validationscriptspartial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{59F02EAF-16CF-415D-AC04-7E51ED781D3A}|FURNITRACK.csproj|solutionrelative:views\\shared\\_validationscriptspartial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{59F02EAF-16CF-415D-AC04-7E51ED781D3A}|FURNITRACK.csproj|c:\\users\\loki\\source\\repos\\furnitrack\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{59F02EAF-16CF-415D-AC04-7E51ED781D3A}|FURNITRACK.csproj|solutionrelative:controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{59F02EAF-16CF-415D-AC04-7E51ED781D3A}|FURNITRACK.csproj|c:\\users\\loki\\source\\repos\\furnitrack\\viewmodels\\reportsviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{59F02EAF-16CF-415D-AC04-7E51ED781D3A}|FURNITRACK.csproj|solutionrelative:viewmodels\\reportsviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{59F02EAF-16CF-415D-AC04-7E51ED781D3A}|FURNITRACK.csproj|c:\\users\\loki\\source\\repos\\furnitrack\\views\\home\\reports.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{59F02EAF-16CF-415D-AC04-7E51ED781D3A}|FURNITRACK.csproj|solutionrelative:views\\home\\reports.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,7 +66,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 14,
+          "SelectedChildIndex": 21,
           "Children": [
             {
               "$type": "Bookmark",
@@ -74,20 +118,163 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "InventoryViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\loki\\source\\repos\\FURNITRACK\\ViewModels\\InventoryViewModel.cs",
+              "RelativeDocumentMoniker": "ViewModels\\InventoryViewModel.cs",
+              "ToolTip": "C:\\Users\\loki\\source\\repos\\FURNITRACK\\ViewModels\\InventoryViewModel.cs",
+              "RelativeToolTip": "ViewModels\\InventoryViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-15T00:39:17.666Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "ARCHITECTURE_DIAGRAMS.md",
+              "DocumentMoniker": "C:\\Users\\loki\\source\\repos\\FURNITRACK\\ARCHITECTURE_DIAGRAMS.md",
+              "RelativeDocumentMoniker": "ARCHITECTURE_DIAGRAMS.md",
+              "ToolTip": "C:\\Users\\loki\\source\\repos\\FURNITRACK\\ARCHITECTURE_DIAGRAMS.md",
+              "RelativeToolTip": "ARCHITECTURE_DIAGRAMS.md",
+              "ViewState": "AgIAABIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
+              "WhenOpened": "2026-05-15T00:12:04.152Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "_ViewImports.cshtml",
+              "DocumentMoniker": "C:\\Users\\loki\\source\\repos\\FURNITRACK\\Views\\_ViewImports.cshtml",
+              "RelativeDocumentMoniker": "Views\\_ViewImports.cshtml",
+              "ToolTip": "C:\\Users\\loki\\source\\repos\\FURNITRACK\\Views\\_ViewImports.cshtml",
+              "RelativeToolTip": "Views\\_ViewImports.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-15T00:11:54.764Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Users.cshtml",
+              "DocumentMoniker": "C:\\Users\\loki\\source\\repos\\FURNITRACK\\Views\\Home\\Users.cshtml",
+              "RelativeDocumentMoniker": "Views\\Home\\Users.cshtml",
+              "ToolTip": "C:\\Users\\loki\\source\\repos\\FURNITRACK\\Views\\Home\\Users.cshtml",
+              "RelativeToolTip": "Views\\Home\\Users.cshtml",
+              "ViewState": "AgIAAGYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-15T00:11:17.79Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Sales.cshtml",
+              "DocumentMoniker": "C:\\Users\\loki\\source\\repos\\FURNITRACK\\Views\\Home\\Sales.cshtml",
+              "RelativeDocumentMoniker": "Views\\Home\\Sales.cshtml",
+              "ToolTip": "C:\\Users\\loki\\source\\repos\\FURNITRACK\\Views\\Home\\Sales.cshtml",
+              "RelativeToolTip": "Views\\Home\\Sales.cshtml",
+              "ViewState": "AgIAAGwAAAAAAAAAAAAAABUAAAA7AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-15T00:11:11.321Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "_ValidationScriptsPartial.cshtml",
+              "DocumentMoniker": "C:\\Users\\loki\\source\\repos\\FURNITRACK\\Views\\Shared\\_ValidationScriptsPartial.cshtml",
+              "RelativeDocumentMoniker": "Views\\Shared\\_ValidationScriptsPartial.cshtml",
+              "ToolTip": "C:\\Users\\loki\\source\\repos\\FURNITRACK\\Views\\Shared\\_ValidationScriptsPartial.cshtml",
+              "RelativeToolTip": "Views\\Shared\\_ValidationScriptsPartial.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-15T00:07:25.929Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "C:\\Users\\loki\\source\\repos\\FURNITRACK\\Views\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "C:\\Users\\loki\\source\\repos\\FURNITRACK\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "Views\\Shared\\_Layout.cshtml",
+              "ViewState": "AgIAAEgAAAAAAAAAAAAUwFYAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-15T00:07:22.1Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Inventory.cshtml",
+              "DocumentMoniker": "C:\\Users\\loki\\source\\repos\\FURNITRACK\\Views\\Home\\Inventory.cshtml",
+              "RelativeDocumentMoniker": "Views\\Home\\Inventory.cshtml",
+              "ToolTip": "C:\\Users\\loki\\source\\repos\\FURNITRACK\\Views\\Home\\Inventory.cshtml",
+              "RelativeToolTip": "Views\\Home\\Inventory.cshtml",
+              "ViewState": "AgIAADMAAAAAAAAAAAAAAFUAAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-14T23:48:19.538Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\loki\\source\\repos\\FURNITRACK\\Views\\Home\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\Home\\Index.cshtml",
+              "ToolTip": "C:\\Users\\loki\\source\\repos\\FURNITRACK\\Views\\Home\\Index.cshtml",
+              "RelativeToolTip": "Views\\Home\\Index.cshtml",
+              "ViewState": "AgIAAEIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-14T23:47:30.106Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Dashboard.cshtml",
+              "DocumentMoniker": "C:\\Users\\loki\\source\\repos\\FURNITRACK\\Views\\Home\\Dashboard.cshtml",
+              "RelativeDocumentMoniker": "Views\\Home\\Dashboard.cshtml",
+              "ToolTip": "C:\\Users\\loki\\source\\repos\\FURNITRACK\\Views\\Home\\Dashboard.cshtml*",
+              "RelativeToolTip": "Views\\Home\\Dashboard.cshtml*",
+              "ViewState": "AgIAAEkAAAAAAAAAAAAAAFUAAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-14T22:58:39.247Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "DashboardViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\loki\\source\\repos\\FURNITRACK\\ViewModels\\DashboardViewModel.cs",
+              "RelativeDocumentMoniker": "ViewModels\\DashboardViewModel.cs",
+              "ToolTip": "C:\\Users\\loki\\source\\repos\\FURNITRACK\\ViewModels\\DashboardViewModel.cs",
+              "RelativeToolTip": "ViewModels\\DashboardViewModel.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAgwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-14T22:58:33.406Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 2,
               "Title": "Reports.cshtml",
               "DocumentMoniker": "C:\\Users\\loki\\source\\repos\\FURNITRACK\\Views\\Home\\Reports.cshtml",
               "RelativeDocumentMoniker": "Views\\Home\\Reports.cshtml",
               "ToolTip": "C:\\Users\\loki\\source\\repos\\FURNITRACK\\Views\\Home\\Reports.cshtml",
               "RelativeToolTip": "Views\\Home\\Reports.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAABcBAAAAAAAAAAAAAEYAAAAvAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2026-05-06T08:16:02.672Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 13,
               "Title": "ReportsViewModel.cs",
               "DocumentMoniker": "C:\\Users\\loki\\source\\repos\\FURNITRACK\\ViewModels\\ReportsViewModel.cs",
               "RelativeDocumentMoniker": "ViewModels\\ReportsViewModel.cs",
@@ -95,18 +282,17 @@
               "RelativeToolTip": "ViewModels\\ReportsViewModel.cs",
               "ViewState": "AgIAABAAAAAAAAAAAAAzwBkAAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-06T08:12:26.677Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-06T08:12:26.677Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 12,
               "Title": "HomeController.cs",
               "DocumentMoniker": "C:\\Users\\loki\\source\\repos\\FURNITRACK\\Controllers\\HomeController.cs",
               "RelativeDocumentMoniker": "Controllers\\HomeController.cs",
               "ToolTip": "C:\\Users\\loki\\source\\repos\\FURNITRACK\\Controllers\\HomeController.cs",
               "RelativeToolTip": "Controllers\\HomeController.cs",
-              "ViewState": "AgIAADIBAAAAAAAAAAAuwD8BAAAVAAAAAAAAAA==",
+              "ViewState": "AgIAAE0BAAAAAAAAAAAuwD8BAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-04-22T00:45:27.295Z",
               "EditorCaption": ""

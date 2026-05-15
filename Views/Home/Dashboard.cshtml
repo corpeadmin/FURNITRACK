@@ -77,11 +77,14 @@
             <i class="bi bi-cart-plus me-2"></i> Record Sale
         </a>
     </div>
-    <div class="col-md-4">
-        <a asp-controller="Home" asp-action="Reports" class="btn btn-white border w-100 py-3 fw-bold shadow-sm d-flex align-items-center justify-content-center bg-white">
-            <i class="bi bi-bar-chart-line me-2"></i> View Reports
-        </a>
-    </div>
+    @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+    {
+        <div class="col-md-4">
+            <a asp-controller="Home" asp-action="Reports" class="btn btn-white border w-100 py-3 fw-bold shadow-sm d-flex align-items-center justify-content-center bg-white">
+                <i class="bi bi-bar-chart-line me-2"></i> View Reports
+            </a>
+        </div>
+    }
 </div>
 
 <div class="row g-4 mb-4">
