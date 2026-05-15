@@ -7,14 +7,14 @@
     @* HEADER SECTION *@
     <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
         <div>
-            <h2 class="fw-bold mb-1" style="color: #1e293b;">Reports & Analytics</h2>
+            <h2 class="fw-bold mb-1">Reports & Analytics</h2>
             <p class="text-muted mb-0">Track sales performance and inventory metrics</p>
         </div>
 
         @* DATE FILTER *@
-        <div class="d-flex align-items-center bg-white border rounded-3 px-3 py-2 shadow-sm date-badge">
+        <div class="d-flex align-items-center glass-card px-3 py-2 shadow-sm date-badge" style="border-radius: 12px !important;">
             <i class="bi bi-calendar3 text-primary me-2"></i>
-            <span class="text-dark small fw-semibold">
+            <span class="small fw-semibold">
                 @Model.StartDate.ToString("MMM dd") - @Model.EndDate.ToString("MMM dd, yyyy")
             </span>
         </div>
@@ -23,7 +23,7 @@
     @* SUMMARY CARDS *@
     <div class="row g-4 mb-5">
         <div class="col-sm-6 col-xl-3">
-            <div class="card border-0 shadow-sm p-3 h-100 summary-card">
+            <div class="card glass-card p-3 h-100 summary-card">
                 <div class="d-flex align-items-center">
                     <div class="icon-shape bg-soft-slate me-3">
                         <i class="bi bi-currency-dollar fs-4 text-slate"></i>
@@ -37,7 +37,7 @@
         </div>
 
         <div class="col-sm-6 col-xl-3">
-            <div class="card border-0 shadow-sm p-3 h-100 summary-card">
+            <div class="card glass-card p-3 h-100 summary-card">
                 <div class="d-flex align-items-center">
                     <div class="icon-shape bg-soft-success me-3">
                         <i class="bi bi-cart-check fs-4 text-success"></i>
@@ -51,7 +51,7 @@
         </div>
 
         <div class="col-sm-6 col-xl-3">
-            <div class="card border-0 shadow-sm p-3 h-100 summary-card">
+            <div class="card glass-card p-3 h-100 summary-card">
                 <div class="d-flex align-items-center">
                     <div class="icon-shape bg-soft-warning me-3">
                         <i class="bi bi-bag-check fs-4 text-warning"></i>
@@ -65,7 +65,7 @@
         </div>
 
         <div class="col-sm-6 col-xl-3">
-            <div class="card border-0 shadow-sm p-3 h-100 summary-card">
+            <div class="card glass-card p-3 h-100 summary-card">
                 <div class="d-flex align-items-center">
                     <div class="icon-shape bg-soft-info me-3">
                         <i class="bi bi-box-seam fs-4 text-info"></i>
@@ -83,8 +83,8 @@
     <div class="row g-4">
         @* INVENTORY HEALTH CARD *@
         <div class="col-lg-5">
-            <div class="card border-0 shadow-sm h-100">
-                <div class="card-header bg-white py-3 border-0">
+            <div class="card glass-card h-100">
+                <div class="card-header bg-transparent py-3 border-0">
                     <h5 class="fw-bold mb-0">Inventory Health</h5>
                 </div>
                 <div class="card-body">
@@ -104,7 +104,7 @@
                         double lowPercent = total > 0 ? (low / total) * 100 : 0;
                     }
 
-                    <div class="progress mt-4 mb-4" style="height: 12px; border-radius: 20px; background-color: #f1f5f9;">
+                    <div class="progress mt-4 mb-4" style="height: 12px; border-radius: 20px; background-color: rgba(255,255,255,0.2);">
                         <div class="progress-bar bg-success" role="progressbar"
                              style="width: @healthyPercent.ToString("0")%; transition: width 0.8s ease;"
                              aria-valuenow="@healthyPercent" aria-valuemin="0" aria-valuemax="100"></div>
@@ -114,7 +114,7 @@
                     </div>
 
                     <div class="row text-center mt-2">
-                        <div class="col-6 border-end">
+                        <div class="col-6 border-end border-white border-opacity-10">
                             <div class="d-flex align-items-center justify-content-center mb-1">
                                 <span class="dot bg-success me-2"></span>
                                 <span class="small text-muted fw-medium">Healthy</span>
@@ -135,8 +135,8 @@
 
         @* SALES CHART CARD *@
         <div class="col-lg-7">
-            <div class="card border-0 shadow-sm h-100">
-                <div class="card-header bg-white py-3 border-0 d-flex justify-content-between align-items-center">
+            <div class="card glass-card h-100">
+                <div class="card-header bg-transparent py-3 border-0 d-flex justify-content-between align-items-center">
                     <h5 class="fw-bold mb-0">Sales Performance</h5>
                     <span class="badge bg-soft-primary text-primary px-2 py-2">Monthly Overview</span>
                 </div>
@@ -157,13 +157,12 @@
     }
 
     .reports-container {
-        font-family: 'Inter', system-ui, -apple-system, sans-serif;
-        background-color: #f8fafc;
+        font-family: inherit;
+        background-color: transparent;
     }
 
     .summary-card {
         border-radius: 12px;
-        border: 1px solid #f1f5f9 !important;
     }
 
     .icon-shape {
@@ -175,29 +174,29 @@
         border-radius: 10px;
     }
 
-    /* Soft Color Themes */
+    /* Soft Color Themes - Refined for Dark Mode */
     .bg-soft-slate {
-        background-color: #f1f5f9;
+        background-color: rgba(71, 85, 105, 0.1);
     }
 
     .text-slate {
-        color: #475569;
+        color: var(--text-muted);
     }
 
     .bg-soft-success {
-        background-color: #f0fdf4;
+        background-color: rgba(25, 135, 84, 0.1);
     }
 
     .bg-soft-warning {
-        background-color: #fffbeb;
+        background-color: rgba(255, 193, 7, 0.1);
     }
 
     .bg-soft-info {
-        background-color: #f0f9ff;
+        background-color: rgba(13, 202, 240, 0.1);
     }
 
     .bg-soft-primary {
-        background-color: #eff6ff;
+        background-color: rgba(13, 110, 253, 0.1);
     }
 
     .dot {
@@ -206,12 +205,12 @@
         border-radius: 50%;
     }
 
-    .progress-bar {
-        box-shadow: none;
+    .progress {
+        background-color: rgba(255,255,255,0.1) !important;
     }
 
-    .date-badge {
-        border-color: #e2e8f0 !important;
+    .progress-bar {
+        box-shadow: none;
     }
 
     /* Animation on hover */
@@ -231,6 +230,10 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            const isDark = document.documentElement.getAttribute('data-bs-theme') === 'dark';
+            const gridColor = isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)';
+            const textColor = isDark ? '#a0aec0' : '#475569';
+
             // Parse data from Model
             const rawData = @Html.Raw(Model.SalesChartData ?? "[]");
 
@@ -281,14 +284,16 @@
                     scales: {
                         y: {
                             beginAtZero: true,
-                            grid: { color: '#f1f5f9', drawBorder: false },
+                            grid: { color: gridColor, drawBorder: false },
                             ticks: {
+                                color: textColor,
                                 callback: value => '₱' + value.toLocaleString(),
                                 font: { size: 11 }
                             }
                         },
                         x: {
-                            grid: { display: false }
+                            grid: { display: false },
+                            ticks: { color: textColor }
                         }
                     }
                 }

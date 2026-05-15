@@ -10,6 +10,9 @@ namespace FURNITRACK.Data
         {
             context.Database.EnsureCreated();
 
+            // Always update existing products with ImageUrl if they are using the default placeholder
+            UpdateProductImageUrls(context);
+
             // Look for any users.
             if (context.Users.Any())
             {
@@ -46,13 +49,13 @@ namespace FURNITRACK.Data
 
             var products = new Product[]
             {
-                new Product { Name = "Executive Office Chair", SKU = "OFF-CHR-001", Description = "High-back ergonomic leather chair", UnitPrice = 4250.00m, QuantityInStock = 15, MinimumStockLevel = 5, MaximumStockLevel = 30, CategoryId = categories[0].CategoryId },
-                new Product { Name = "L-Shaped Desk", SKU = "OFF-DSK-002", Description = "Large wooden desk with built-in drawers", UnitPrice = 8500.00m, QuantityInStock = 8, MinimumStockLevel = 3, MaximumStockLevel = 15, CategoryId = categories[0].CategoryId },
-                new Product { Name = "Leather Sectional Sofa", SKU = "LIV-SOF-001", Description = "Premium gray leather sofa", UnitPrice = 25000.00m, QuantityInStock = 4, MinimumStockLevel = 2, MaximumStockLevel = 10, CategoryId = categories[1].CategoryId },
-                new Product { Name = "Oak Dining Table", SKU = "DIN-TBL-001", Description = "Solid oak table for 6 people", UnitPrice = 12000.00m, QuantityInStock = 6, MinimumStockLevel = 2, MaximumStockLevel = 12, CategoryId = categories[2].CategoryId },
-                new Product { Name = "Memory Foam Mattress", SKU = "BED-MAT-001", Description = "Queen size comfort mattress", UnitPrice = 15000.00m, QuantityInStock = 12, MinimumStockLevel = 4, MaximumStockLevel = 20, CategoryId = categories[3].CategoryId },
-                new Product { Name = "Folding Chair", SKU = "DIN-CHR-005", Description = "Simple metal folding chair", UnitPrice = 450.00m, QuantityInStock = 50, MinimumStockLevel = 10, MaximumStockLevel = 100, CategoryId = categories[2].CategoryId },
-                new Product { Name = "Bookshelf", SKU = "OFF-STG-003", Description = "5-tier wooden bookshelf", UnitPrice = 3200.00m, QuantityInStock = 2, MinimumStockLevel = 5, MaximumStockLevel = 20, CategoryId = categories[0].CategoryId } // Low stock item
+                new Product { Name = "Executive Office Chair", SKU = "OFF-CHR-001", Description = "High-back ergonomic leather chair", UnitPrice = 4250.00m, QuantityInStock = 15, MinimumStockLevel = 5, MaximumStockLevel = 30, CategoryId = categories[0].CategoryId, ImageUrl = "https://images.unsplash.com/photo-1505797149-43b007662c21?q=80&w=400&auto=format&fit=crop" },
+                new Product { Name = "L-Shaped Desk", SKU = "OFF-DSK-002", Description = "Large wooden desk with built-in drawers", UnitPrice = 8500.00m, QuantityInStock = 8, MinimumStockLevel = 3, MaximumStockLevel = 15, CategoryId = categories[0].CategoryId, ImageUrl = "https://images.unsplash.com/photo-1518455027359-f3f816b1a238?q=80&w=400&auto=format&fit=crop" },
+                new Product { Name = "Leather Sectional Sofa", SKU = "LIV-SOF-001", Description = "Premium gray leather sofa", UnitPrice = 25000.00m, QuantityInStock = 4, MinimumStockLevel = 2, MaximumStockLevel = 10, CategoryId = categories[1].CategoryId, ImageUrl = "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?q=80&w=400&auto=format&fit=crop" },
+                new Product { Name = "Oak Dining Table", SKU = "DIN-TBL-001", Description = "Solid oak table for 6 people", UnitPrice = 12000.00m, QuantityInStock = 6, MinimumStockLevel = 2, MaximumStockLevel = 12, CategoryId = categories[2].CategoryId, ImageUrl = "https://images.unsplash.com/photo-1577146333355-bd1e650bc31b?q=80&w=400&auto=format&fit=crop" },
+                new Product { Name = "Memory Foam Mattress", SKU = "BED-MAT-001", Description = "Queen size comfort mattress", UnitPrice = 15000.00m, QuantityInStock = 12, MinimumStockLevel = 4, MaximumStockLevel = 20, CategoryId = categories[3].CategoryId, ImageUrl = "https://images.unsplash.com/photo-1505691938895-1758d7eaa511?q=80&w=400&auto=format&fit=crop" },
+                new Product { Name = "Folding Chair", SKU = "DIN-CHR-005", Description = "Simple metal folding chair", UnitPrice = 450.00m, QuantityInStock = 50, MinimumStockLevel = 10, MaximumStockLevel = 100, CategoryId = categories[2].CategoryId, ImageUrl = "https://images.unsplash.com/photo-1503602642458-232111445657?q=80&w=400&auto=format&fit=crop" },
+                new Product { Name = "Bookshelf", SKU = "OFF-STG-003", Description = "5-tier wooden bookshelf", UnitPrice = 3200.00m, QuantityInStock = 2, MinimumStockLevel = 5, MaximumStockLevel = 20, CategoryId = categories[0].CategoryId, ImageUrl = "https://images.unsplash.com/photo-1594620302200-9a762244a156?q=80&w=400&auto=format&fit=crop" }
             };
 
             context.Products.AddRange(products);
@@ -99,6 +102,37 @@ namespace FURNITRACK.Data
 
             context.SalesItems.AddRange(salesItems);
             context.SaveChanges();
+        }
+
+        private static void UpdateProductImageUrls(ApplicationDBContext context)
+        {
+            var imageUrlMap = new Dictionary<string, string>
+            {
+                { "OFF-CHR-001", "https://images.unsplash.com/photo-1505797149-43b007662c21?q=80&w=400&auto=format&fit=crop" },
+                { "OFF-DSK-002", "https://images.unsplash.com/photo-1518455027359-f3f816b1a238?q=80&w=400&auto=format&fit=crop" },
+                { "LIV-SOF-001", "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?q=80&w=400&auto=format&fit=crop" },
+                { "DIN-TBL-001", "https://images.unsplash.com/photo-1577146333355-bd1e650bc31b?q=80&w=400&auto=format&fit=crop" },
+                { "BED-MAT-001", "https://images.unsplash.com/photo-1505691938895-1758d7eaa511?q=80&w=400&auto=format&fit=crop" },
+                { "DIN-CHR-005", "https://images.unsplash.com/photo-1503602642458-232111445657?q=80&w=400&auto=format&fit=crop" },
+                { "OFF-STG-003", "https://images.unsplash.com/photo-1594620302200-9a762244a156?q=80&w=400&auto=format&fit=crop" }
+            };
+
+            bool updated = false;
+            var existingProducts = context.Products.ToList();
+            foreach (var product in existingProducts)
+            {
+                if (product.SKU != null && imageUrlMap.ContainsKey(product.SKU) && 
+                    (string.IsNullOrEmpty(product.ImageUrl) || product.ImageUrl == "/images/placeholder-furniture.png"))
+                {
+                    product.ImageUrl = imageUrlMap[product.SKU];
+                    updated = true;
+                }
+            }
+
+            if (updated)
+            {
+                context.SaveChanges();
+            }
         }
     }
 }

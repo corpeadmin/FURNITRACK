@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using System.Security.Claims;
+using System.IO;
 using FURNITRACK.Models;
 using FURNITRACK.Services;
 using FURNITRACK.ViewModels;
@@ -18,19 +19,25 @@ namespace FURNITRACK.Controllers
         private readonly ICategoryService _categoryService;
         private readonly IUserService _userService;
         private readonly ISalesService _salesService;
+        private readonly ICustomerService _customerService;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
         public HomeController(
             ILogger<HomeController> logger,
             IProductService productService,
             ICategoryService categoryService,
             IUserService userService,
-            ISalesService salesService)
+            ISalesService salesService,
+            ICustomerService customerService,
+            IWebHostEnvironment webHostEnvironment)
         {
             _logger = logger;
             _productService = productService;
             _categoryService = categoryService;
             _userService = userService;
             _salesService = salesService;
+            _customerService = customerService;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         [AllowAnonymous]
@@ -163,27 +170,43 @@ namespace FURNITRACK.Controllers
         [HttpPost]
         [Authorize(Roles = "Admin,Manager")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateProduct(Product product)
+        public async Task<IActionResult> CreateProduct(Product product, IFormFile? imageFile)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
+                    if (imageFile != null && imageFile.Length > 0)
+                    {
+                        string fileName = Guid.NewGuid().ToString() + Path.GetExtension(imageFile.FileName);
+                        string uploadPath = Path.Combine(_webHostEnvironment.WebRootPath, "images", "products");
+                        
+                        if (!Directory.Exists(uploadPath))
+                            Directory.CreateDirectory(uploadPath);
+
+                        string filePath = Path.Combine(uploadPath, fileName);
+                        using (var stream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await imageFile.CopyToAsync(stream);
+                        }
+                        product.ImageUrl = "/images/products/" + fileName;
+                    }
+
                     await _productService.CreateProductAsync(product);
+                    TempData["SuccessMessage"] = "Product added successfully!";
                     return RedirectToAction(nameof(Inventory));
                 }
 
-                // Log validation errors
-                var errors = string.Join(" | ", ModelState.Values
-                    .SelectMany(v => v.Errors)
-                    .Select(e => e.ErrorMessage));
+                var errors = string.Join(" | ", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage));
                 _logger.LogWarning($"Product creation failed validation: {errors}");
+                TempData["ErrorMessage"] = "Validation failed. Please check your inputs.";
 
-                return await Inventory();
+                return RedirectToAction(nameof(Inventory));
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Error creating product: {ex.Message}");
+                TempData["ErrorMessage"] = "An unexpected error occurred.";
                 return RedirectToAction(nameof(Inventory));
             }
         }
@@ -191,20 +214,43 @@ namespace FURNITRACK.Controllers
         [HttpPost]
         [Authorize(Roles = "Admin,Manager")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditProduct(Product product)
+        public async Task<IActionResult> EditProduct(Product product, IFormFile? imageFile)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
+                    if (imageFile != null && imageFile.Length > 0)
+                    {
+                        string fileName = Guid.NewGuid().ToString() + Path.GetExtension(imageFile.FileName);
+                        string uploadPath = Path.Combine(_webHostEnvironment.WebRootPath, "images", "products");
+
+                        if (!Directory.Exists(uploadPath))
+                            Directory.CreateDirectory(uploadPath);
+
+                        string filePath = Path.Combine(uploadPath, fileName);
+                        using (var stream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await imageFile.CopyToAsync(stream);
+                        }
+                        product.ImageUrl = "/images/products/" + fileName;
+                    }
+
                     await _productService.UpdateProductAsync(product);
+                    TempData["SuccessMessage"] = "Product updated successfully!";
                     return RedirectToAction(nameof(Inventory));
                 }
-                return await Inventory();
+
+                var errors = string.Join(" | ", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage));
+                _logger.LogWarning($"Product update failed validation: {errors}");
+                TempData["ErrorMessage"] = "Update failed. Please check your inputs.";
+
+                return RedirectToAction(nameof(Inventory));
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Error updating product: {ex.Message}");
+                TempData["ErrorMessage"] = "An error occurred during update.";
                 return RedirectToAction(nameof(Inventory));
             }
         }
@@ -266,9 +312,26 @@ namespace FURNITRACK.Controllers
                 int userId;
                 if (!int.TryParse(userIdClaim, out userId))
                 {
-                    // Fallback to first user if claim is missing (should not happen with [Authorize])
                     var user = (await _userService.GetAllUsersAsync()).FirstOrDefault();
                     userId = user?.UserId ?? 1;
+                }
+
+                // Customer Logic: Find or create customer
+                int? customerId = null;
+                if (!string.IsNullOrEmpty(request.CustomerName))
+                {
+                    var customer = await _customerService.GetCustomerByNameAsync(request.CustomerName);
+                    if (customer == null)
+                    {
+                        customer = new Customer 
+                        { 
+                            Name = request.CustomerName,
+                            Email = request.CustomerEmail ?? "walkin@example.com",
+                            CreatedDate = DateTime.UtcNow
+                        };
+                        await _customerService.CreateCustomerAsync(customer);
+                    }
+                    customerId = customer.CustomerId;
                 }
 
                 decimal subTotal = request.Items.Sum(i => i.Price * i.Quantity);
@@ -286,6 +349,7 @@ namespace FURNITRACK.Controllers
                     TotalAmount = total,
                     Status = "Completed",
                     UserId = userId,
+                    CustomerId = customerId,
                     SalesItems = request.Items.Select(i => new SalesItem
                     {
                         ProductId = i.ProductId,
@@ -295,10 +359,8 @@ namespace FURNITRACK.Controllers
                     }).ToList()
                 };
 
-                // Create the sale
                 await _salesService.CreateSaleAsync(sale);
 
-                // Update inventory for each item
                 foreach (var item in request.Items)
                 {
                     var product = await _productService.GetProductByIdAsync(item.ProductId);
@@ -317,7 +379,54 @@ namespace FURNITRACK.Controllers
                 return StatusCode(500, "Internal server error.");
             }
         }
-        // update 111
+
+        public async Task<IActionResult> Customers()
+        {
+            try
+            {
+                var customers = await _customerService.GetAllCustomersAsync();
+                var startOfMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+                
+                var viewModel = new CustomersViewModel
+                {
+                    Customers = customers,
+                    TotalCustomers = customers.Count,
+                    NewCustomersThisMonth = customers.Count(c => c.CreatedDate >= startOfMonth)
+                };
+
+                return View(viewModel);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error loading customers: {ex.Message}");
+                return View(new CustomersViewModel());
+            }
+        }
+
+        public async Task<IActionResult> CustomerDetails(int id)
+        {
+            try
+            {
+                var customer = await _customerService.GetCustomerByIdAsync(id);
+                if (customer == null) return NotFound();
+
+                var history = await _customerService.GetCustomerPurchaseHistoryAsync(id);
+
+                var viewModel = new CustomersViewModel
+                {
+                    SelectedCustomer = customer,
+                    PurchaseHistory = history
+                };
+
+                return View(viewModel);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error loading customer details: {ex.Message}");
+                return RedirectToAction(nameof(Customers));
+            }
+        }
+
         [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> Reports()
         {
@@ -330,7 +439,6 @@ namespace FURNITRACK.Controllers
                 var allProducts = await _productService.GetAllProductsAsync();
                 var lowStockProducts = await _productService.GetLowStockProductsAsync();
 
-                // Prepare data for the chart: Group sales by date
                 var chartData = salesThisMonth
                     .GroupBy(s => s.SalesDate.Date)
                     .OrderBy(g => g.Key)
@@ -349,7 +457,6 @@ namespace FURNITRACK.Controllers
                     TotalProducts = allProducts.Count,
                     LowStockItems = lowStockProducts.Count,
                     TotalInventoryValue = allProducts.Sum(p => p.UnitPrice * p.QuantityInStock),
-                    // Pass the serialized data to the view
                     SalesChartData = System.Text.Json.JsonSerializer.Serialize(chartData)
                 };
 
@@ -400,7 +507,6 @@ namespace FURNITRACK.Controllers
                     return RedirectToAction(nameof(Users));
                 }
 
-                // Log validation errors
                 var errors = string.Join(" | ", ModelState.Values
                     .SelectMany(v => v.Errors)
                     .Select(e => e.ErrorMessage));

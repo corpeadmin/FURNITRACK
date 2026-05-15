@@ -1,18 +1,25 @@
-﻿@model FURNITRACK.ViewModels.LoginViewModel
+@model FURNITRACK.ViewModels.LoginViewModel
 @{
     ViewData["Title"] = "Login";
 }
 
-<div class="d-flex align-items-center justify-content-center" style="min-height: 100vh; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">
-    <div class="card shadow-sm border-0" style="width: 100%; max-width: 420px; border-radius: 12px;">
-        <div class="card-body p-5">
+<div class="d-flex align-items-center justify-content-center px-3" style="min-height: 100vh; position: relative; overflow: hidden;">
+    <!-- Background mesh is inherited from site.css body, but we'll reinforce it here if needed -->
+    
+    <div class="card glass-card shadow-lg p-2" style="width: 100%; max-width: 440px; z-index: 10;">
+        <div class="card-body p-4 p-md-5">
 
             <div class="text-center mb-5">
-                <div class="mb-3">
-                    <i class="bi bi-box-seam" style="font-size: 3rem; color: #1a335d;"></i>
+                <div class="mb-4 d-inline-block">
+                    <div class="bg-primary bg-opacity-10 p-3 rounded-circle shadow-sm" style="width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; margin: 0 auto;">
+                        <i class="bi bi-box-seam text-primary" style="font-size: 2.5rem;"></i>
+                    </div>
                 </div>
-                <h3 class="fw-bold mb-1" style="color: #1a335d; letter-spacing: 1px;">FURNITRACK</h3>
-                <p class="text-muted small uppercase">Ken's Marketing & General Merchandise</p>
+                <h2 class="fw-bold mb-1" style="color: var(--primary-color); letter-spacing: 2px;">FURNITRACK</h2>
+                <p class="text-muted small text-uppercase fw-bold ls-1" style="letter-spacing: 1px;">Ken's Marketing Management</p>
+                <div class="mt-2 text-primary opacity-75">
+                    <span class="small fw-medium">Welcome back! Please login to your account.</span>
+                </div>
             </div>
 
             <form asp-action="Login" method="post">
@@ -20,53 +27,81 @@
                 
                 <div asp-validation-summary="ModelOnly" class="text-danger small mb-3"></div>
 
-                <div class="mb-3">
-                    <label asp-for="Email" class="form-label small fw-bold text-secondary">Email Address</label>
-                    <div class="input-group">
-                        <span class="input-group-text bg-white border-end-0 text-muted">
-                            <i class="bi bi-envelope"></i>
+                <div class="mb-4">
+                    <label asp-for="Email" class="form-label small fw-bold text-muted text-uppercase mb-2" style="font-size: 0.7rem;">Email Address</label>
+                    <div class="input-group glass-card border-0 p-1" style="background: rgba(255,255,255,0.4);">
+                        <span class="input-group-text bg-transparent border-0 text-muted ps-3">
+                            <i class="bi bi-person-fill"></i>
                         </span>
-                        <input asp-for="Email" class="form-control border-start-0 ps-0" placeholder="e.g. admin@furnitrack.com" />
+                        <input asp-for="Email" class="form-control border-0 bg-transparent py-2" placeholder="admin@furnitrack.com" style="box-shadow: none;" />
                     </div>
                     <span asp-validation-for="Email" class="text-danger small"></span>
                 </div>
 
-                <div class="mb-3">
-                    <label asp-for="Password" class="form-label small fw-bold text-secondary">Password</label>
-                    <div class="input-group">
-                        <span class="input-group-text bg-white border-end-0 text-muted">
-                            <i class="bi bi-lock"></i>
+                <div class="mb-4">
+                    <label asp-for="Password" class="form-label small fw-bold text-muted text-uppercase mb-2" style="font-size: 0.7rem;">Password</label>
+                    <div class="input-group glass-card border-0 p-1" style="background: rgba(255,255,255,0.4);">
+                        <span class="input-group-text bg-transparent border-0 text-muted ps-3">
+                            <i class="bi bi-lock-fill"></i>
                         </span>
-                        <input asp-for="Password" class="form-control border-start-0 ps-0" placeholder="••••••••" />
+                        <input asp-for="Password" type="password" class="form-control border-0 bg-transparent py-2" placeholder="••••••••" style="box-shadow: none;" />
                     </div>
                     <span asp-validation-for="Password" class="text-danger small"></span>
                 </div>
 
-                <div class="mb-4 d-flex justify-content-between">
-                    <div class="form-check">
-                        <input asp-for="RememberMe" class="form-check-input" />
-                        <label asp-for="RememberMe" class="form-check-label small text-muted">Remember me</label>
+                <div class="mb-4 d-flex justify-content-between align-items-center">
+                    <div class="form-check custom-checkbox">
+                        <input asp-for="RememberMe" class="form-check-input" style="cursor: pointer;" />
+                        <label asp-for="RememberMe" class="form-check-label small text-muted" style="cursor: pointer;">Keep me logged in</label>
                     </div>
+                    <a href="#" class="text-primary small text-decoration-none fw-medium">Forgot Password?</a>
                 </div>
 
                 <div class="d-grid gap-2">
-                    <button type="submit" class="btn btn-primary py-2 fw-bold" style="background-color: #1a335d; border: none; border-radius: 6px;">
-                        Login to Dashboard
+                    <button type="submit" class="btn btn-primary py-3 fw-bold shadow-lg transform-hover" style="background: linear-gradient(135deg, #1a335d 0%, #0d1b31 100%); border: none; border-radius: 12px; letter-spacing: 0.5px;">
+                        Sign In <i class="bi bi-arrow-right ms-2"></i>
                     </button>
                 </div>
 
-                <div class="mt-4 text-center">
-                    <div class="alert alert-info py-2 px-3 small" style="font-size: 0.75rem;">
-                        <strong>Demo Access:</strong><br />
-                        Email: john.doe@furnitrack.com<br />
-                        Pass: Password123
+                <div class="mt-5">
+                    <div class="p-3 rounded-4 bg-light bg-opacity-50 border border-white border-opacity-25 shadow-sm text-center">
+                        <span class="text-muted small">Need demo access?</span><br />
+                        <code class="text-primary small">john.doe@@furnitrack.com</code> / <code class="text-primary small">Password123</code>
                     </div>
                 </div>
             </form>
 
         </div>
     </div>
+
+    <!-- Decorative Elements -->
+    <div class="position-absolute" style="top: 10%; right: 10%; width: 300px; height: 300px; background: radial-gradient(circle, rgba(13,110,253,0.1) 0%, transparent 70%); border-radius: 50%; z-index: 1;"></div>
+    <div class="position-absolute" style="bottom: 10%; left: 10%; width: 250px; height: 250px; background: radial-gradient(circle, rgba(220,53,69,0.05) 0%, transparent 70%); border-radius: 50%; z-index: 1;"></div>
 </div>
+
+<style>
+    .ls-1 { letter-spacing: 1px; }
+    .transform-hover {
+        transition: all 0.3s ease;
+    }
+    .transform-hover:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(26, 51, 93, 0.2) !important;
+    }
+    
+    /* Input Group Focus Effect */
+    .input-group:focus-within {
+        background: rgba(255,255,255,0.7) !important;
+        box-shadow: 0 0 0 2px rgba(26, 51, 93, 0.1) !important;
+    }
+
+    [data-bs-theme="dark"] .input-group {
+        background: rgba(0,0,0,0.2) !important;
+    }
+    [data-bs-theme="dark"] .input-group:focus-within {
+        background: rgba(0,0,0,0.4) !important;
+    }
+</style>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

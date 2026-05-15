@@ -27,6 +27,9 @@ namespace FURNITRACK.Models
         public int UserId { get; set; }
         
         public User? CreatedBy { get; set; }
+
+        public int? CustomerId { get; set; }
+        public Customer? Customer { get; set; }
         
         public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
         

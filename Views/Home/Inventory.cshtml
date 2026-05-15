@@ -11,8 +11,7 @@
 
     @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
     {
-        <button class="btn text-white px-4 py-2 fw-bold shadow-sm"
-                style="background-color: #1a335d;"
+        <button class="btn btn-primary-gradient px-4 py-2 fw-bold shadow-sm"
                 data-bs-toggle="modal"
                 data-bs-target="#addItemModal">
             <i class="bi bi-plus-lg me-2"></i> Add Item
@@ -22,33 +21,32 @@
 
 <div class="row g-4 mb-4">
     <div class="col-md-4">
-        <div class="card border-0 shadow-sm p-3">
+        <div class="card glass-card p-3">
             <p class="text-muted small mb-1">Total Products</p>
             <h4 class="fw-bold mb-0">@Model.TotalProducts</h4>
         </div>
     </div>
     <div class="col-md-4">
-        <div class="card border-0 shadow-sm p-3">
+        <div class="card glass-card p-3">
             <p class="text-muted small mb-1">Total Inventory Value</p>
             <h4 class="fw-bold mb-0">@Model.TotalInventoryValue.ToString("C", new System.Globalization.CultureInfo("en-PH"))</h4>
         </div>
     </div>
     <div class="col-md-4">
-        <div class="card border-0 shadow-sm p-3">
+        <div class="card glass-card p-3">
             <p class="text-muted small mb-1">Low Stock Items</p>
             <h4 class="fw-bold mb-0 text-danger">@Model.LowStockCount</h4>
         </div>
     </div>
 </div>
 
-<div class="card border-0 shadow-sm mb-4">
+<div class="card glass-card mb-4">
     <div class="card-body p-3">
         <div class="input-group">
-            <span class="input-group-text bg-transparent border-end-0">
+            <span class="input-group-text bg-transparent border-0 pe-0">
                 <i class="bi bi-search text-muted"></i>
             </span>
-            <!-- Added id="inventorySearch" to enable the script to find it -->
-            <input type="text" id="inventorySearch" class="form-control border-start-0 ps-0" placeholder="Search items...">
+            <input type="text" id="inventorySearch" class="form-control border-0 bg-transparent ps-2" placeholder="Search items...">
         </div>
     </div>
 </div>
@@ -77,12 +75,13 @@
     });
 </script>
 
-<div class="card border-0 shadow-sm">
+<div class="card glass-card">
     <div class="table-responsive">
         <table class="table align-middle mb-0">
-            <thead class="table-light">
+            <thead class="text-muted">
                 <tr class="fw-bold">
-                    <th class="ps-4">Item Name</th>
+                    <th class="ps-4" style="width: 60px;"></th>
+                    <th>Item Name</th>
                     <th>Category</th>
                     <th>Quantity</th>
                     <th>Price</th>
@@ -94,16 +93,33 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model.Products)
+                @if (!Model.Products.Any())
                 {
                     <tr>
+                        <td colspan="7" class="text-center py-5">
+                            <i class="bi bi-box-seam display-1 text-muted opacity-25"></i>
+                            <p class="text-muted mt-3">No products found. Add your first item to get started!</p>
+                        </td>
+                    </tr>
+                }
+                @foreach (var item in Model.Products)
+                {
+                    <tr class="hover-shadow">
                         <td class="ps-4">
+                            <img src="@(string.IsNullOrEmpty(item.ImageUrl) ? "/images/placeholder-furniture.png" : item.ImageUrl)" 
+                                 alt="@item.Name" class="product-thumb shadow-sm">
+                        </td>
+                        <td>
                             <div class="fw-medium">@item.Name</div>
                             <small class="text-muted">SKU: @item.SKU</small>
                         </td>
                         <td class="text-muted">@(item.Category?.Name ?? "N/A")</td>
                         <td>
-                            <span class="@(item.QuantityInStock <= item.MinimumStockLevel ? "text-danger fw-bold" : "")">
+                            @{
+                                var stockClass = item.QuantityInStock <= item.MinimumStockLevel ? "stock-low" : 
+                                               item.QuantityInStock <= (item.MinimumStockLevel * 2) ? "stock-medium" : "stock-high";
+                            }
+                            <span class="badge @stockClass rounded-pill px-3 py-2">
                                 @item.QuantityInStock
                             </span>
                         </td>
@@ -139,82 +155,98 @@
                             </td>
                         }
                     </tr>
-
-                    <!-- Edit Item Modal for each product -->
-                    <div class="modal fade" id="editItemModal-@item.ProductId" tabindex="-1" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content border-0 shadow">
-                                <div class="modal-header">
-                                    <h5 class="modal-title fw-bold">Edit Item</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                </div>
-                                <form asp-action="EditProduct" method="post">
-                                    <input type="hidden" name="ProductId" value="@item.ProductId" />
-                                    <div class="modal-body p-4">
-                                        <div class="mb-3">
-                                            <label class="form-label fw-medium">Item Name</label>
-                                            <input type="text" name="Name" class="form-control" value="@item.Name" required>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label fw-medium">SKU</label>
-                                            <input type="text" name="SKU" class="form-control" value="@item.SKU" required>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label fw-medium">Category</label>
-                                            <select name="CategoryId" class="form-select">
-                                                @foreach (var cat in Model.Categories)
-                                                {
-                                                    <!option value="@cat.CategoryId" @(cat.CategoryId == item.CategoryId ? "selected" : "")>@cat.Name</!option>
-                                                }
-                                            </select>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6 mb-3">
-                                                <label class="form-label fw-medium">Quantity</label>
-                                                <input type="number" name="QuantityInStock" class="form-control" value="@item.QuantityInStock" required>
-                                            </div>
-                                            <div class="col-md-6 mb-3">
-                                                <label class="form-label fw-medium">Price (₱)</label>
-                                                <input type="number" name="UnitPrice" step="0.01" class="form-control" value="@item.UnitPrice" required>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6 mb-3">
-                                                <label class="form-label fw-medium">Min Stock</label>
-                                                <input type="number" name="MinimumStockLevel" class="form-control" value="@item.MinimumStockLevel" required>
-                                            </div>
-                                            <div class="col-md-6 mb-3">
-                                                <label class="form-label fw-medium">Max Stock</label>
-                                                <input type="number" name="MaximumStockLevel" class="form-control" value="@item.MaximumStockLevel" required>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-light px-4" data-bs-dismiss="modal">Cancel</button>
-                                        <button type="submit" class="btn text-white px-4" style="background-color:#1a335d;">Update Item</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
                 }
             </tbody>
         </table>
     </div>
 </div>
 
-<div class="modal fade" id="addItemModal" tabindex="-1" aria-hidden="true">
+@* Modals moved outside table to prevent flickering *@
+@foreach (var item in Model.Products)
+{
+    <!-- Edit Item Modal for each product -->
+    <div class="modal fade" id="editItemModal-@item.ProductId" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold">Edit Item</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form asp-action="EditProduct" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="ProductId" value="@item.ProductId" />
+                    <div class="modal-body p-4">
+                        <div class="mb-3">
+                            <label class="form-label fw-medium">Item Name</label>
+                            <input type="text" name="Name" class="form-control" value="@item.Name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-medium">Change Picture</label>
+                            <input type="file" name="imageFile" class="form-control" accept="image/*">
+                            <small class="text-muted">Or update URL (optional)</small>
+                            <input type="text" name="ImageUrl" class="form-control mt-1" value="@item.ImageUrl">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-medium">SKU</label>
+                            <input type="text" name="SKU" class="form-control" value="@item.SKU" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-medium">Category</label>
+                            <select name="CategoryId" class="form-select" required>
+                                @foreach (var cat in Model.Categories)
+                                {
+                                    <!option value="@cat.CategoryId" @(cat.CategoryId == item.CategoryId ? "selected" : "")>@cat.Name</!option>
+                                }
+                            </select>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-medium">Quantity</label>
+                                <input type="number" name="QuantityInStock" class="form-control" value="@item.QuantityInStock" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-medium">Price (₱)</label>
+                                <input type="number" name="UnitPrice" step="0.01" class="form-control" value="@item.UnitPrice" required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-medium">Min Stock</label>
+                                <input type="number" name="MinimumStockLevel" class="form-control" value="@item.MinimumStockLevel" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-medium">Max Stock</label>
+                                <input type="number" name="MaximumStockLevel" class="form-control" value="@item.MaximumStockLevel" required>
+                            </div>
+                        </div>
+                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light px-4" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary-gradient px-4">Update Item</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="modal fade" id="addItemModal" ...>
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content border-0 shadow">
             <div class="modal-header">
                 <h5 class="modal-title fw-bold">Add New Item</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <form asp-action="CreateProduct" method="post">
+            <form asp-action="CreateProduct" method="post" enctype="multipart/form-data">
                 <div class="modal-body p-4">
                     <div class="mb-3">
                         <label class="form-label fw-medium">Item Name</label>
                         <input type="text" name="Name" class="form-control" placeholder="Enter item name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-medium">Item Picture</label>
+                        <input type="file" name="imageFile" class="form-control" accept="image/*">
+                        <small class="text-muted">Or provide a URL (optional)</small>
+                        <input type="text" name="ImageUrl" class="form-control mt-1" placeholder="https://example.com/image.jpg">
                     </div>
                     <div class="mb-3">
                         <label class="form-label fw-medium">SKU</label>
@@ -222,8 +254,8 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label fw-medium">Category</label>
-                        <select name="CategoryId" class="form-select">
-                            <option selected disabled>Select a category</option>
+                        <select name="CategoryId" class="form-select" required>
+                            <option value="" selected disabled>Select a category</option>
                             @foreach (var cat in Model.Categories)
                             {
                                 <option value="@cat.CategoryId">@cat.Name</option>
@@ -253,7 +285,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light px-4" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn text-white px-4" style="background-color:#1a335d;">Add Item</button>
+                    <button type="submit" class="btn btn-primary-gradient px-4">Add Item</button>
                 </div>
             </form>
         </div>

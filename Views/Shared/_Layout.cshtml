@@ -27,25 +27,29 @@
     {
         @* SIDEBAR VISIBLE FOR ALL OTHER PAGES *@
         <div class="d-flex" id="wrapper">
-            <!-- FIXED SIDEBAR - Won't scroll with page -->
-            <div class="bg-dark-blue text-white position-fixed"
+            <!-- FIXED GLASS SIDEBAR -->
+            <div class="glass-sidebar text-white position-fixed"
                  id="sidebar-wrapper"
-                 style="min-width: 250px; min-height: 100vh; background-color: #1a335d; top: 0; left: 0; z-index: 1000;">
-                <div class="sidebar-heading p-4">
-                    <h4 class="fw-bold mb-0">FURNITRACK</h4>
-                    <small class="text-white-50">Furniture Inventory Management</small>
+                 style="min-width: 220px; width: 220px; min-height: 100vh; top: 0; left: 0; z-index: 1000;">
+                <div class="sidebar-heading p-4 d-flex justify-content-between align-items-center">
+                    <div>
+                        <h4 class="fw-bold mb-0" style="font-size: 1.2rem;">
+                            <i class="bi bi-box-seam me-2"></i>FURNITRACK
+                        </h4>
+                        <small class="text-white-50" style="font-size: 0.65rem;">Management Suite</small>
+                    </div>
                 </div>
 
                 @if (User.Identity?.IsAuthenticated == true)
                 {
                     <div class="px-4 mb-4">
                         <div class="d-flex align-items-center">
-                            <div class="rounded-circle bg-white text-primary d-flex align-items-center justify-content-center me-2" style="width: 32px; height: 32px;">
-                                <i class="bi bi-person-fill"></i>
+                            <div class="rounded-circle bg-white text-primary d-flex align-items-center justify-content-center me-2" style="width: 28px; height: 32px; min-width: 28px;">
+                                <i class="bi bi-person-fill" style="font-size: 0.9rem;"></i>
                             </div>
-                            <div>
-                                <p class="mb-0 small fw-bold">@User.Identity.Name</p>
-                                <small class="text-white-50" style="font-size: 0.7rem;">@User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value</small>
+                            <div class="overflow-hidden">
+                                <p class="mb-0 small fw-bold text-truncate" style="max-width: 140px;">@User.Identity.Name</p>
+                                <small class="text-white-50 d-block" style="font-size: 0.65rem;">@User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value</small>
                             </div>
                         </div>
                     </div>
@@ -53,34 +57,38 @@
 
                 <div class="list-group list-group-flush px-3">
                     @* Working Redirects *@
-                    <a asp-controller="Home" asp-action="Dashboard" class="list-group-item list-group-item-action bg-transparent text-white border-0 py-2 rounded mb-1 @(currentAction == "Dashboard" ? "active-link" : "")">
+                    <a asp-controller="Home" asp-action="Dashboard" class="list-group-item list-group-item-action bg-transparent text-white border-0 py-2 rounded mb-1 @(currentAction == "Dashboard" ? "active-link" : "")" style="font-size: 0.9rem;">
                         <i class="bi bi-grid-1x2-fill me-2"></i> Dashboard
                     </a>
 
-                    <a asp-controller="Home" asp-action="Inventory" class="list-group-item list-group-item-action bg-transparent text-white border-0 py-2 rounded mb-1 @(currentAction == "Inventory" ? "active-link" : "")">
+                    <a asp-controller="Home" asp-action="Inventory" class="list-group-item list-group-item-action bg-transparent text-white border-0 py-2 rounded mb-1 @(currentAction == "Inventory" ? "active-link" : "")" style="font-size: 0.9rem;">
                         <i class="bi bi-box-seam me-2"></i> Inventory
                     </a>
 
-                    <a asp-controller="Home" asp-action="Sales" class="list-group-item list-group-item-action bg-transparent text-white border-0 py-2 rounded mb-1 @(currentAction == "Sales" ? "active-link" : "")">
+                    <a asp-controller="Home" asp-action="Sales" class="list-group-item list-group-item-action bg-transparent text-white border-0 py-2 rounded mb-1 @(currentAction == "Sales" ? "active-link" : "")" style="font-size: 0.9rem;">
                         <i class="bi bi-cart me-2"></i> Sales
+                    </a>
+
+                    <a asp-controller="Home" asp-action="Customers" class="list-group-item list-group-item-action bg-transparent text-white border-0 py-2 rounded mb-1 @(currentAction == "Customers" ? "active-link" : "")" style="font-size: 0.9rem;">
+                        <i class="bi bi-person-badge me-2"></i> Customers
                     </a>
 
                     @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
                     {
-                        <a asp-controller="Home" asp-action="Reports" class="list-group-item list-group-item-action bg-transparent text-white border-0 py-2 rounded mb-1 @(currentAction == "Reports" ? "active-link" : "")">
+                        <a asp-controller="Home" asp-action="Reports" class="list-group-item list-group-item-action bg-transparent text-white border-0 py-2 rounded mb-1 @(currentAction == "Reports" ? "active-link" : "")" style="font-size: 0.9rem;">
                             <i class="bi bi-bar-chart-line me-2"></i> Reports
                         </a>
                     }
 
                     @if (User.IsInRole("Admin"))
                     {
-                        <a asp-controller="Home" asp-action="Users" class="list-group-item list-group-item-action bg-transparent text-white border-0 py-2 rounded mb-1 @(currentAction == "Users" ? "active-link" : "")">
+                        <a asp-controller="Home" asp-action="Users" class="list-group-item list-group-item-action bg-transparent text-white border-0 py-2 rounded mb-1 @(currentAction == "Users" ? "active-link" : "")" style="font-size: 0.9rem;">
                             <i class="bi bi-people me-2"></i> Users
                         </a>
                     }
 
-                    <div class="mt-5 pt-5">
-                        <a asp-controller="Home" asp-action="Logout" class="list-group-item list-group-item-action bg-transparent text-white border-0 py-2">
+                    <div class="mt-4 pt-4 border-top border-white border-opacity-10">
+                        <a asp-controller="Home" asp-action="Logout" class="list-group-item list-group-item-action bg-transparent text-white border-0 py-2 rounded mb-1" style="font-size: 0.9rem;">
                             <i class="bi bi-box-arrow-left me-2"></i> Logout
                         </a>
                     </div>
@@ -88,7 +96,7 @@
             </div>
 
             <!-- PAGE CONTENT - Offset to prevent overlap with fixed sidebar -->
-            <div id="page-content-wrapper" class="w-100 bg-light" style="margin-left: 250px;">
+            <div id="page-content-wrapper" class="w-100" style="margin-left: 220px;">
                 <div class="container-fluid p-4">
                     <main role="main">
                         @RenderBody()
@@ -98,8 +106,75 @@
         </div>
     }
 
+    <!-- Floating Theme Toggle -->
+    <button id="themeToggle" class="btn glass-card shadow-lg position-fixed d-flex align-items-center justify-content-center" 
+            style="bottom: 85px; right: 20px; width: 50px; height: 50px; border-radius: 50%; z-index: 2001; background: var(--glass-bg); border: 1px solid var(--glass-border);">
+        <i id="themeIcon" class="bi bi-sun-fill fs-4 text-primary"></i>
+    </button>
+
+    <!-- Global Toast Container -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 2000;">
+        <div id="liveToast" class="toast border-0 shadow" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body" id="toastMessage"></div>
+                <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Theme Toggle Logic
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const htmlElement = document.documentElement;
+
+        function updateThemeIcon(theme) {
+            if (theme === 'dark') {
+                themeIcon.className = 'bi bi-moon-stars-fill fs-4 text-warning';
+                htmlElement.setAttribute('data-bs-theme', 'dark');
+            } else {
+                themeIcon.className = 'bi bi-sun-fill fs-4 text-primary';
+                htmlElement.setAttribute('data-bs-theme', 'light');
+            }
+        }
+
+        // Initialize theme
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        updateThemeIcon(savedTheme);
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = htmlElement.getAttribute('data-bs-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+        });
+
+        // Global Toast Function
+        window.showToast = function(message, type = 'success') {
+            const toastEl = document.getElementById('liveToast');
+            const toastMsg = document.getElementById('toastMessage');
+            
+            toastEl.className = `toast border-0 shadow bg-${type} text-white`;
+            toastMsg.innerText = message;
+            
+            const toast = new bootstrap.Toast(toastEl);
+            toast.show();
+        };
+
+        // Show Toasts from TempData
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <text>showToast("@TempData["SuccessMessage"]", "success");</text>
+        }
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <text>showToast("@TempData["ErrorMessage"]", "danger");</text>
+        }
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

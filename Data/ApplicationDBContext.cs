@@ -1,4 +1,4 @@
-﻿using FURNITRACK.Models;
+using FURNITRACK.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace FURNITRACK.Data
@@ -16,6 +16,7 @@ namespace FURNITRACK.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Sales> Sales { get; set; }
         public DbSet<SalesItem> SalesItems { get; set; }
+        public DbSet<Customer> Customers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -60,6 +61,14 @@ namespace FURNITRACK.Data
                 .HasIndex(u => u.Email)
                 .IsUnique();
 
+            // Customer configuration
+            modelBuilder.Entity<Customer>()
+                .HasKey(c => c.CustomerId);
+            modelBuilder.Entity<Customer>()
+                .Property(c => c.Name)
+                .IsRequired()
+                .HasMaxLength(100);
+
             // Sales configuration
             modelBuilder.Entity<Sales>()
                 .HasKey(s => s.SalesId);
@@ -81,6 +90,13 @@ namespace FURNITRACK.Data
                 .WithMany(u => u.CreatedSales)
                 .HasForeignKey(s => s.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            // Sales-Customer relationship
+            modelBuilder.Entity<Sales>()
+                .HasOne(s => s.Customer)
+                .WithMany(c => c.Sales)
+                .HasForeignKey(s => s.CustomerId)
+                .OnDelete(DeleteBehavior.SetNull);
 
             // SalesItem configuration
             modelBuilder.Entity<SalesItem>()
